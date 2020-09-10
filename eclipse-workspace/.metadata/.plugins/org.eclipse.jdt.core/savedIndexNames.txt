@@ -1,0 +1,3 @@
+INDEX VERSION 1.131+/Users/williamqin/School/6 Comp Sci 3 Data Structures KAP/eclipse-workspace/.metadata/.plugins/org.eclipse.jdt.core
+4277714104.index
+520256478.index
