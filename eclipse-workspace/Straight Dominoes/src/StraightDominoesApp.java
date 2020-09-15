@@ -45,7 +45,6 @@ public class StraightDominoesApp {
 		storage = new ResourceMan(filesList);
 		
 		new Window(GAME_TITLE);
-
+		
 	}
-
 }

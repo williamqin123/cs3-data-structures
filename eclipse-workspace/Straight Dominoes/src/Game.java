@@ -11,10 +11,19 @@ public class Game {
 	private GameViewport g;
 	
 	private GameElement stickyElement = null;
+	
+	
 
 	public Game(GameViewport gl) {
 		g = gl;
 	}
+	
+	private void repaintActiveLayers() {
+		g.glActiveShadow.repaint();
+		g.glActiveDominoes.repaint();
+	}
+	
+	
 	
 	private Player getActivePlayer() {
 		return players.get(turn);
@@ -108,12 +117,49 @@ public class Game {
 		
 	}
 	
-	public void handleClickEvent(GameElement el) {
-		if (el instanceof Domino && getActivePlayer().hand.contains(el)) {
+	public void handleClickEvent() {};
+	
+	public void handleClickEvent(GameElement el, ClickArea zone) {
+		
+		if (zone.getName().equals("hand")) {
+			g.removeClickZone(zone);
+			
+			stickyElement.setDY(0);
+			g.glActiveDominoes.removeDrawable(el);
+			stickyElement = null;
+			showHand(turn);
+		}
+		
+		else if (el instanceof Domino && getActivePlayer().hand.contains(el)) {
+			g.removeClickZone(zone);
 			stickyElement = el;
 			el.setDY(-20);
 			
-			g.repaint();
+			// transfers selected domino from hand layer to active layer
+			g.glHandDominoes.removeDrawable(el);
+			g.glActiveDominoes.addDrawable(el);
+			
+			g.glHandShadow.repaint();
+			g.glHandDominoes.repaint();
+			
+			repaintActiveLayers();
+			
+			
+			
+			ClickArea leftSidebar = new ClickArea(0, 0, 210, 800);
+			leftSidebar.setName("hand");
+			g.addClickZone(leftSidebar);
+		}
+	}
+	
+	public void handleRightClickEvent(GameElement el, ClickArea zone) {}
+	
+	public void handleRightClickEvent() {
+		if (stickyElement instanceof Domino) {
+			
+			stickyElement.rotate(90);
+			
+			repaintActiveLayers();
 		}
 	}
 	
@@ -123,7 +169,7 @@ public class Game {
 		stickyElement.centerX(x);
 		stickyElement.centerY(y);
 		
-		g.repaint();
+		repaintActiveLayers();
 	}
 	
 }
