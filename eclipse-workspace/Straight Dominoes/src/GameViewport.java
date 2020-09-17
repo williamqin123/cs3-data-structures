@@ -65,6 +65,38 @@ public class GameViewport extends JLayeredPane implements MouseListener, MouseMo
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		/*
+		ClickArea zone = click(e.getX(), e.getY());
+		
+		if (zone == null) {
+			if (SwingUtilities.isLeftMouseButton(e)) {
+				StraightDominoesApp.game.handleClickEvent(); // generic, targetless left-click
+			}
+			else if (SwingUtilities.isRightMouseButton(e)) {
+				StraightDominoesApp.game.handleRightClickEvent(); // generic, targetless right-click
+			}
+			return;
+		}
+		
+		if (SwingUtilities.isLeftMouseButton(e)) {
+			StraightDominoesApp.game.handleClickEvent(zone.getTarget(), zone);
+		}
+		else if (SwingUtilities.isRightMouseButton(e)) {
+			StraightDominoesApp.game.handleRightClickEvent(zone.getTarget(), zone);
+		}
+		*/
+	}
+
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
 		
 		ClickArea zone = click(e.getX(), e.getY());
 		
@@ -84,19 +116,6 @@ public class GameViewport extends JLayeredPane implements MouseListener, MouseMo
 		else if (SwingUtilities.isRightMouseButton(e)) {
 			StraightDominoesApp.game.handleRightClickEvent(zone.getTarget(), zone);
 		}
-	}
-
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 

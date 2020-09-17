@@ -14,7 +14,13 @@ public class Window extends JFrame {
 		
 		super(framename);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+		
+		Toolkit.getDefaultToolkit().setDynamicLayout(false);
+		
+		Dimension size = new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+		getContentPane().setPreferredSize(size);
+		getContentPane().setMinimumSize(size);
+		getContentPane().setMaximumSize(size);
 		
 		GameViewport gameArea = new GameViewport();
 		
@@ -27,8 +33,19 @@ public class Window extends JFrame {
 		
 		setVisible(true);
 		
+		pack();
+		
 		StraightDominoesApp.game.start();
 		
-		pack();
+		addComponentListener(new ComponentAdapter() 
+		{  
+			public void componentResized(ComponentEvent arg0) {
+			    Rectangle b = arg0.getComponent().getBounds();
+			    ((JFrame) arg0.getComponent()).getContentPane().setPreferredSize(new Dimension(b.width, (int) (b.width * 2.0/3.0)));
+				
+				pack();
+
+			}
+		});
 	}
 }
