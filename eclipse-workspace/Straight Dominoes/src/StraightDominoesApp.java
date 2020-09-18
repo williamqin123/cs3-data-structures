@@ -4,7 +4,7 @@ public class StraightDominoesApp {
 	public static String GAME_TITLE = "Straight Dominoes Legends";
 	
 	private final static String[] filesList = {
-		"src/resources/board.png",
+		"src/resources/new-bg.png",
 			
 		"src/resources/domino00.png",
 		"src/resources/domino10.png",
@@ -39,12 +39,14 @@ public class StraightDominoesApp {
 	public static ResourceMan storage;
 	
 	public static Game game;
+	
+	public static Window window;
 
 	public static void main(String[] args) {
 		
 		storage = new ResourceMan(filesList);
 		
-		new Window(GAME_TITLE);
+		window = new Window(GAME_TITLE);
 		
 	}
 }

@@ -1,3 +1,5 @@
+import java.awt.Color;
+import java.awt.Font;
 import java.util.*;
 
 public class Game {
@@ -46,7 +48,7 @@ public class Game {
 	
 	private void makePlayers(int count) {
 		
-		for (int i = 0; i <= count; i++) {
+		for (int i = 0; i < count; i++) {
 			players.add(new Player());
 		}
 	}
@@ -74,10 +76,12 @@ public class Game {
 		
 		int i = 0;
 		
-		for (Domino dom : getActivePlayer().hand) {
+		ArrayList<Domino> hand = getActivePlayer().hand;
+		int handSize = hand.size();
+		for (Domino dom : hand) {
 			
 			dom.centerX(100);
-			dom.centerY((int)((i + 1.0) / 8.0 * Window.DEFAULT_HEIGHT));
+			dom.centerY((int)(290 + (i + 1.0) / (handSize + 1.0) * 510));
 			
 			g.addClickZone(dom.getX(), dom.getY(), dom.getX() + dom.getWidth(), dom.getY() + dom.getHeight(), dom);
 			
@@ -93,11 +97,43 @@ public class Game {
 	private void nextTurn() {
 		turn = (turn + 1) % players.size();
 		showHand(turn);
+		
+		TextLabel currentPlayerLabel = players.get(turn).getScoreLabel();
+		currentPlayerLabel.addFlag("scoreboard-active");
+		
+		g.glHUD.repaint();
+	}
+	
+	private void updateDisplayedScores() {
+		
+		for (Player player : players) {
+			TextLabel t = player.getScoreLabel();
+			t.setText(t.getText().substring(0, t.getText().indexOf(':') + 2) + player.getScore());
+		}
+		
+		g.glHUD.repaint();
+	}
+	
+	private void setupScorecard() {
+		
+		g.glHUD.addLabel(new TextLabel("Round 1", "Tahoma", Font.BOLD, 25, Color.BLACK, 30, 100));
+		
+		for (int i = 1; i <= players.size(); i++) {
+			
+			TextLabel t = new TextLabel("Player " + i + ": 0", "Tahoma", Font.PLAIN, 20, Color.BLACK, 30, 100 + 40 * i);
+		
+			g.glHUD.addLabel(t);
+			
+			players.get(i - 1).linkScoreLabel(t);
+		
+		}
+		
+		g.glHUD.repaint();
 	}
 	
 	public void start() {
 		
-		GameElement board = new GameElement(StraightDominoesApp.storage.get("board.png"));
+		GameElement board = new GameElement(StraightDominoesApp.storage.get("new-bg.png"));
 		board.setWidth(Window.DEFAULT_WIDTH);
 		board.setHeight(Window.DEFAULT_HEIGHT);
 		
@@ -112,6 +148,8 @@ public class Game {
 		makePlayers(4);
 		
 		distributeDominoes(dominoes, players, 7);
+		
+		setupScorecard();
 		
 		nextTurn();
 		

@@ -21,15 +21,17 @@ public class ImgGraphicsLayer extends LayerPanel {
 		
 		Graphics2D g2 = (Graphics2D)g;
 		
+		double scale = StraightDominoesApp.window.viewport.getScale();
+		
 		for (GameElement img : objects) {
 			if (!img.isVisible()) continue;
 			
 			AffineTransform initialTransform = g2.getTransform();
 			
-			g2.translate(img.getX() + img.getDX() + img.getWidth() / 2, img.getY() + img.getDY() + img.getHeight() / 2);
+			g2.translate((img.getX() + img.getDX() + img.getWidth() / 2) * scale, (img.getY() + img.getDY() + img.getHeight() / 2) * scale);
 			g2.rotate(Math.toRadians(img.getRotation()));
 			
-			g2.drawImage(img.getRawImage(), -img.getWidth() / 2, -img.getHeight() / 2, img.getWidth(), img.getHeight(), null);
+			g2.drawImage(img.getRawImage(), (int) (-img.getWidth() / 2 * scale), (int) (-img.getHeight() / 2 * scale), (int) (img.getWidth() * scale), (int) (img.getHeight() * scale), null);
 			
 			g2.setTransform(initialTransform);
 		}

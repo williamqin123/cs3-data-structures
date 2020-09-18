@@ -7,6 +7,12 @@ import java.util.List;
 
 public class GameViewport extends JLayeredPane implements MouseListener, MouseMotionListener {
 	
+	public double getScale() {
+		return getPreferredSize().getWidth() / Window.DEFAULT_WIDTH;
+	}
+	
+	public LayerPanel layers[] = new LayerPanel[10];
+	
 	public ImgGraphicsLayer glBackground = new ImgGraphicsLayer();
 	public ImgGraphicsLayer glShadow = new ImgGraphicsLayer();
 	public ImgGraphicsLayer glDominoes = new ImgGraphicsLayer();
@@ -15,7 +21,7 @@ public class GameViewport extends JLayeredPane implements MouseListener, MouseMo
 	public ImgGraphicsLayer glHandDominoes = new ImgGraphicsLayer();
 	public ImgGraphicsLayer glActiveShadow = new ImgGraphicsLayer();
 	public ImgGraphicsLayer glActiveDominoes = new ImgGraphicsLayer();
-	//public ImgGraphicsLayer glHUD = new TextGraphicsLayer();
+	public TextGraphicsLayer glHUD = new TextGraphicsLayer();
 	public ImgGraphicsLayer glParticles = new ImgGraphicsLayer();
 	
 	
@@ -34,12 +40,19 @@ public class GameViewport extends JLayeredPane implements MouseListener, MouseMo
 	}
 	public ClickArea click(int x, int y) {
 		for (ClickArea zone : clickZones) {
-			if (x >= zone.x0 && x <= zone.x1
-			&&  y >= zone.y0 && y <= zone.y1) {
+			if (x >= zone.x0 * getScale() && x <= zone.x1 * getScale()
+			&&  y >= zone.y0 * getScale() && y <= zone.y1 * getScale()) {
 				return zone;
 			}
 		}
 		return null;
+	}
+	
+	public void rescaleLayers() {
+		for (LayerPanel layer : layers) {
+			layer.setSize((int) (Window.DEFAULT_WIDTH * getScale()), (int) (Window.DEFAULT_HEIGHT * getScale()));
+			layer.setBounds(0, 0, (int) (Window.DEFAULT_WIDTH * getScale()), (int) (Window.DEFAULT_HEIGHT * getScale())); 
+		}
 	}
 	
 	
@@ -47,8 +60,6 @@ public class GameViewport extends JLayeredPane implements MouseListener, MouseMo
 	public GameViewport(){
 		
 		super();
-		
-		setPreferredSize(new Dimension(Window.DEFAULT_WIDTH, Window.DEFAULT_HEIGHT));
 		
 		add(glBackground, new Integer(0));
 		add(glShadow, new Integer(1));
@@ -58,8 +69,22 @@ public class GameViewport extends JLayeredPane implements MouseListener, MouseMo
 		add(glHandDominoes, new Integer(5));
 		add(glActiveShadow, new Integer(6));
 		add(glActiveDominoes, new Integer(7));
+		add(glHUD, new Integer(8));
 		add(glParticles, new Integer(9));
 		
+		layers[0] = glBackground;
+		layers[1] = glShadow;
+		layers[2] = glDominoes;
+		layers[3] = glDropZones;
+		layers[4] = glHandShadow;
+		layers[5] = glHandDominoes;
+		layers[6] = glActiveShadow;
+		layers[7] = glActiveDominoes;
+		layers[8] = glHUD;
+		layers[9] = glParticles;
+		
+		addMouseListener(this);
+		addMouseMotionListener(this);
 	}
 
 
@@ -141,7 +166,7 @@ public class GameViewport extends JLayeredPane implements MouseListener, MouseMo
 	}
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		StraightDominoesApp.game.handleCursorMoveEvent(e.getX(), e.getY());
+		StraightDominoesApp.game.handleCursorMoveEvent((int) (e.getX() / getScale()), (int) (e.getY() / getScale()));
 		
 	}
 
