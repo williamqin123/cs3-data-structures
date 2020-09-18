@@ -18,6 +18,10 @@ public class TextGraphicsLayer extends LayerPanel{
 		
 		double scale = StraightDominoesApp.window.viewport.getScale();
 		
+		// Improves text quality drastically
+		g2.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
+		
 		for (TextLabel txt : objects) {
 			
 			g2.setColor(txt.getColor());

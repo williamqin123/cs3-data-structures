@@ -59,8 +59,6 @@ public class GameViewport extends JLayeredPane implements MouseListener, MouseMo
 	
 	public GameViewport(){
 		
-		super();
-		
 		add(glBackground, new Integer(0));
 		add(glShadow, new Integer(1));
 		add(glDominoes, new Integer(2));

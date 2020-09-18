@@ -1,6 +1,8 @@
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.EventObject;
+
 import javax.swing.*;
 
 public class Window extends JFrame {
@@ -14,6 +16,31 @@ public class Window extends JFrame {
 	
 	
 	
+	private void resize(EventObject e) {
+		if (e.getSource() != Window.this) {
+			return;
+		}
+		
+		revalidate();
+		
+	    Rectangle b = getContentPane().getBounds();
+	    
+	    Dimension d;
+	    
+	    if (b.getWidth() <= ASPECT_RATIO * b.getHeight()) {
+	    	d = new Dimension((int) b.getWidth(), (int) (b.getWidth() / ASPECT_RATIO));
+	    }
+	    else {
+	    	d = new Dimension((int) (b.getHeight() * ASPECT_RATIO), (int) b.getHeight());
+	    }
+		
+		viewport.setPreferredSize(d);
+		viewport.rescaleLayers();
+		viewport.repaint();
+	}
+	
+	
+	
 	public Window(String framename){
 		
 		super(framename);
@@ -22,7 +49,7 @@ public class Window extends JFrame {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		Toolkit.getDefaultToolkit().setDynamicLayout(false);
+		//Toolkit.getDefaultToolkit().setDynamicLayout(false);
 		
 		setBackground(Color.BLACK);
 		getContentPane().setBackground(Color.BLACK);
@@ -63,41 +90,15 @@ public class Window extends JFrame {
 		
 		addComponentListener(new ComponentAdapter() {
 			
-			//private boolean resizeOn = true;
-			
 			public void componentResized(ComponentEvent e) {
-				/*
-				if (!resizeOn) {
-					resizeOn = true;
-					return;
-				}
-				*/
-				if (e.getSource() != Window.this) {
-					return;
-				}
-				
-			    Rectangle b = ((JFrame) e.getComponent()).getContentPane().getBounds();
-			    
-			    Dimension d;
-			    
-			    if (b.getWidth() <= ASPECT_RATIO * b.getHeight()) {
-			    	d = new Dimension((int) b.getWidth(), (int) (b.getWidth() / ASPECT_RATIO));
-			    }
-			    else {
-			    	d = new Dimension((int) (b.getHeight() * ASPECT_RATIO), (int) b.getHeight());
-			    }
-				
-				viewport.setPreferredSize(d);
-				viewport.rescaleLayers();
-				viewport.repaint();
-				
-			    //((JFrame) arg0.getComponent()).getContentPane().setPreferredSize(new Dimension(b.width, (int) (b.width * 2.0/3.0)));
-				
-				//Window.this.removeComponentListener(this);
-				
-				//Window.this.addComponentListener(this);
-
+				resize(e);
 			}
+		});
+		
+		addWindowStateListener(new WindowStateListener() {
+		   public void windowStateChanged(WindowEvent e) {
+			   resize(e);
+		   }
 		});
 	}
 }
