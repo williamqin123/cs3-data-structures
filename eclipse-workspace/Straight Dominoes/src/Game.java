@@ -73,6 +73,7 @@ public class Game {
 	private void showHand(int playerIndex) {
 		g.glHandDominoes.clearRenderList();
 		g.glHandShadow.clearRenderList();
+		g.glHandOverlays.clearRenderList();
 		
 		int i = 0;
 		
@@ -81,17 +82,23 @@ public class Game {
 		for (Domino dom : hand) {
 			
 			dom.centerX(100);
-			dom.centerY((int)(290 + (i + 1.0) / (handSize + 1.0) * 510));
+			dom.centerY((int)(285 + (i + 1.0) / (handSize + 1.0) * 510));
 			
 			g.addClickZone(dom.getX(), dom.getY(), dom.getX() + dom.getWidth(), dom.getY() + dom.getHeight(), dom);
 			
+
+			g.glHandShadow.addDrawable(dom.children.get(2));
+			g.glHandThickness.addDrawable(dom.children.get(1));
 			g.glHandDominoes.addDrawable(dom);
+			g.glHandOverlays.addDrawable(dom.children.get(0));
 			
 			i++;
 		}
 		
-		g.glHandDominoes.repaint();
 		g.glHandShadow.repaint();
+		g.glHandThickness.repaint();
+		g.glHandDominoes.repaint();
+		g.glHandOverlays.repaint();
 	}
 	
 	private void nextTurn() {
@@ -163,7 +170,10 @@ public class Game {
 			g.removeClickZone(zone);
 			
 			stickyElement.setDY(0);
+			g.glActiveDominoes.removeDrawable(el.children.get(2));
+			g.glActiveDominoes.removeDrawable(el.children.get(1));
 			g.glActiveDominoes.removeDrawable(el);
+			g.glActiveDominoes.removeDrawable(el.children.get(0));
 			stickyElement = null;
 			showHand(turn);
 		}
@@ -174,11 +184,24 @@ public class Game {
 			el.setDY(-20);
 			
 			// transfers selected domino from hand layer to active layer
+			g.glHandShadow.removeDrawable(el.children.get(2));
+			g.glActiveShadow.addDrawable(el.children.get(2));
+			
+			g.glHandThickness.removeDrawable(el.children.get(1));
+			g.glActiveThickness.addDrawable(el.children.get(1));
+			
 			g.glHandDominoes.removeDrawable(el);
 			g.glActiveDominoes.addDrawable(el);
 			
+			g.glHandOverlays.removeDrawable(el.children.get(0));
+			g.glActiveOverlays.addDrawable(el.children.get(0));
+			
+			
+			
 			g.glHandShadow.repaint();
+			g.glHandThickness.repaint();
 			g.glHandDominoes.repaint();
+			g.glHandOverlays.repaint();
 			
 			repaintActiveLayers();
 			

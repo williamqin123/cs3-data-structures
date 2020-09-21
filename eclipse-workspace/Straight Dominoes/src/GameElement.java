@@ -25,7 +25,14 @@ public class GameElement {
 	protected int relativeOffsetX = 0;
 	protected int relativeOffsetY = 0;
 	
-	List<GameElement> linked = new ArrayList<GameElement>();
+	protected List<GameElement> children = new ArrayList<GameElement>();
+	protected GameElement parent;
+	
+	public boolean followParentPosition = true;
+	public boolean followParentOffset = false;
+	public boolean followParentRotation = false;
+	
+	public int relativeZindex = 0;
 	
 	public GameElement(Image raw) {
 		rawImage = raw;
@@ -52,10 +59,10 @@ public class GameElement {
 	public int getHeight() {return height;}
 	
 	public void setX(int x) {this.x = x;}
-	public int getX() {return x;}
+	public int getX() {return (parent == null || !followParentPosition) ? x : x + parent.getX();}
 	
 	public void setY(int y) {this.y = y;}
-	public int getY() {return y;}
+	public int getY() {return (parent == null || !followParentPosition) ? y : y + parent.getY();}
 	
 	public void centerX(int x) {
 		this.x = x - width / 2;
@@ -65,8 +72,8 @@ public class GameElement {
 	}
 	
 	public void setDX(int dx) {relativeOffsetX = dx;}
-	public int getDX() {return relativeOffsetX;}
+	public int getDX() {return (parent == null || !followParentOffset) ? relativeOffsetX : relativeOffsetX + parent.getDX();}
 	
 	public void setDY(int dy) {relativeOffsetY = dy;}
-	public int getDY() {return relativeOffsetY;}
+	public int getDY() {return (parent == null || !followParentOffset) ? relativeOffsetY : relativeOffsetY + parent.getDY();}
 }

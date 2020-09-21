@@ -11,18 +11,48 @@ public class GameViewport extends JLayeredPane implements MouseListener, MouseMo
 		return getPreferredSize().getWidth() / Window.DEFAULT_WIDTH;
 	}
 	
-	public LayerPanel layers[] = new LayerPanel[10];
-	
 	public ImgGraphicsLayer glBackground = new ImgGraphicsLayer();
+	
 	public ImgGraphicsLayer glShadow = new ImgGraphicsLayer();
+	public ImgGraphicsLayer glThickness = new ImgGraphicsLayer();
 	public ImgGraphicsLayer glDominoes = new ImgGraphicsLayer();
+	public ImgGraphicsLayer glOverlays = new ImgGraphicsLayer();
+	
 	public ImgGraphicsLayer glDropZones = new ImgGraphicsLayer();
+	
 	public ImgGraphicsLayer glHandShadow = new ImgGraphicsLayer();
+	public ImgGraphicsLayer glHandThickness = new ImgGraphicsLayer();
 	public ImgGraphicsLayer glHandDominoes = new ImgGraphicsLayer();
-	public ImgGraphicsLayer glActiveShadow = new ImgGraphicsLayer();
-	public ImgGraphicsLayer glActiveDominoes = new ImgGraphicsLayer();
+	public ImgGraphicsLayer glHandOverlays = new ImgGraphicsLayer();
+	
 	public TextGraphicsLayer glHUD = new TextGraphicsLayer();
+	
+	public ImgGraphicsLayer glActiveShadow = new ImgGraphicsLayer();
+	public ImgGraphicsLayer glActiveThickness = new ImgGraphicsLayer();
+	public ImgGraphicsLayer glActiveDominoes = new ImgGraphicsLayer();
+	public ImgGraphicsLayer glActiveOverlays = new ImgGraphicsLayer();
+	
 	public ImgGraphicsLayer glParticles = new ImgGraphicsLayer();
+	
+	public LayerPanel layers[] = {
+		glBackground,
+		glShadow,
+		glThickness,
+		glDominoes,
+		glOverlays,
+		glDropZones,
+		glHandShadow,
+		glHandThickness,
+		glHandDominoes,
+		glHandOverlays,
+		glHUD,
+		glActiveShadow,
+		glActiveThickness,
+		glActiveDominoes,
+		glActiveOverlays,
+		glParticles
+	};
+	
 	
 	
 	private List<ClickArea> clickZones = new ArrayList<ClickArea>();
@@ -59,27 +89,9 @@ public class GameViewport extends JLayeredPane implements MouseListener, MouseMo
 	
 	public GameViewport(){
 		
-		add(glBackground, new Integer(0));
-		add(glShadow, new Integer(1));
-		add(glDominoes, new Integer(2));
-		add(glDropZones, new Integer(3));
-		add(glHandShadow, new Integer(4));
-		add(glHandDominoes, new Integer(5));
-		add(glActiveShadow, new Integer(6));
-		add(glActiveDominoes, new Integer(7));
-		add(glHUD, new Integer(8));
-		add(glParticles, new Integer(9));
-		
-		layers[0] = glBackground;
-		layers[1] = glShadow;
-		layers[2] = glDominoes;
-		layers[3] = glDropZones;
-		layers[4] = glHandShadow;
-		layers[5] = glHandDominoes;
-		layers[6] = glActiveShadow;
-		layers[7] = glActiveDominoes;
-		layers[8] = glHUD;
-		layers[9] = glParticles;
+		for (int i = 0; i < layers.length; i++) {
+			add(layers[i], new Integer(i));
+		}
 		
 		addMouseListener(this);
 		addMouseMotionListener(this);
