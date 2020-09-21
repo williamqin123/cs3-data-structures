@@ -170,10 +170,10 @@ public class Game {
 			g.removeClickZone(zone);
 			
 			stickyElement.setDY(0);
-			g.glActiveDominoes.removeDrawable(el.children.get(2));
-			g.glActiveDominoes.removeDrawable(el.children.get(1));
+			g.glHandShadow.removeDrawable(el.children.get(2));
+			g.glHandThickness.removeDrawable(el.children.get(1));
 			g.glActiveDominoes.removeDrawable(el);
-			g.glActiveDominoes.removeDrawable(el.children.get(0));
+			g.glHandOverlays.removeDrawable(el.children.get(0));
 			stickyElement = null;
 			showHand(turn);
 		}

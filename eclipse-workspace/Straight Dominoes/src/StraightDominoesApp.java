@@ -49,7 +49,7 @@ public class StraightDominoesApp {
 	public static void main(String[] args) {
 		
 		// Enables hardware acceleration
-		//System.setProperty("sun.java2d.opengl", "True");
+		System.setProperty("sun.java2d.opengl", "true");
 		
 		storage = new ResourceMan(filesList);
 		
