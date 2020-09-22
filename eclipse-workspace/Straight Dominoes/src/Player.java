@@ -1,30 +1,29 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Player {
 	
 	public ArrayList<Domino> hand = new ArrayList<Domino>();
 	
-	private TextLabel associatedScoreLabel;
+	HashMap<String, Object> linkedObjects = new HashMap<String, Object>();
 	
 	
 	
-	private int score = 0;
+	private int roundScore = 0;
+	private int totalScore = 0;
 	
 	
 	
-	public void linkScoreLabel(TextLabel t) {
-		associatedScoreLabel = t;
-	}
-	public TextLabel getScoreLabel() {
-		return associatedScoreLabel;
-	}
-	
-	
-	
-	public int getScore() { return score; }
+	public int getTotalScore() { return totalScore; }
+	public int getCurrentRoundScore() { return roundScore; }
 	
 	public void addPoints(int pts) {
-		score += pts;
+		roundScore += pts;
+		totalScore += pts;
+	}
+	
+	public void resetRoundScore() {
+		roundScore = 0;
 	}
 }

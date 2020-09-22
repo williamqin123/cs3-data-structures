@@ -12,7 +12,7 @@ public class Window extends JFrame {
 	
 	public static final double ASPECT_RATIO = 1.5;
 	
-	GameViewport viewport;
+	public GameViewport viewport;
 	
 	
 	
@@ -62,9 +62,6 @@ public class Window extends JFrame {
 		viewport = new GameViewport();
 		viewport.setPreferredSize(dim);
 		
-		StraightDominoesApp.game = new Game(viewport);
-		
-		
 		
 		
 		Box verticalBox = Box.createVerticalBox();
@@ -85,8 +82,6 @@ public class Window extends JFrame {
 		//addMouseMotionListener(viewport);
 		
 		setVisible(true);
-		
-		StraightDominoesApp.game.start();
 		
 		addComponentListener(new ComponentAdapter() {
 			

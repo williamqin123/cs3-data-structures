@@ -35,9 +35,14 @@ public class StraightDominoesApp {
 		"src/resources/new-domino-65.png",
 		"src/resources/new-domino-66.png",
 		
-		"src/resources/domino-shading.png",
-		"src/resources/domino-3d.png",
-		"src/resources/domino-shadow.png"
+		"src/resources/domino-shading-h.png",
+		"src/resources/domino-3d-h.png",
+		"src/resources/domino-shading-v.png",
+		"src/resources/domino-3d-v.png",
+		"src/resources/domino-shadow.png",
+		
+		"src/resources/blue-rect.png",
+		"src/resources/blue-rect-hover.png"
 	};
 	
 	public static ResourceMan storage;
@@ -55,5 +60,7 @@ public class StraightDominoesApp {
 		
 		window = new Window(GAME_TITLE);
 		
+		game = new Game(window.viewport);
+		game.start();
 	}
 }

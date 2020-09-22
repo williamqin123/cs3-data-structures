@@ -40,11 +40,6 @@ public class TextLabel {
 	}
 	
 	public String getText() {
-		
-		if (flags.contains("scoreboard-active")) {
-			return "• " + text;
-		}
-		
 		return text;
 	}
 	public void setText(String str) {
@@ -54,7 +49,7 @@ public class TextLabel {
 	public Font getFont() {
 		
 		if (flags.contains("scoreboard-active")) {
-			return font.deriveFont(Font.ITALIC);
+			return font.deriveFont(Font.ITALIC | Font.BOLD);
 		}
 		
 		return font;

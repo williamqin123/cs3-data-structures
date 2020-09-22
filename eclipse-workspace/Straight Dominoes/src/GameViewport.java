@@ -34,32 +34,41 @@ public class GameViewport extends JLayeredPane implements MouseListener, MouseMo
 	
 	public ImgGraphicsLayer glParticles = new ImgGraphicsLayer();
 	
+	public final int Z_INDEX_BASE = 4;
+	public final int Z_INDEX_HAND = 8;
+	public final int Z_INDEX_ACTIVE = 13;
+	
 	public LayerPanel layers[] = {
-		glBackground,
+		glBackground, //0
+		glDropZones, //1
 		glShadow,
 		glThickness,
-		glDominoes,
+		glDominoes, //4
 		glOverlays,
-		glDropZones,
 		glHandShadow,
 		glHandThickness,
-		glHandDominoes,
+		glHandDominoes, //8
 		glHandOverlays,
 		glHUD,
 		glActiveShadow,
 		glActiveThickness,
-		glActiveDominoes,
+		glActiveDominoes, //13
 		glActiveOverlays,
-		glParticles
+		glParticles //15
 	};
 	
 	
 	
 	private List<ClickArea> clickZones = new ArrayList<ClickArea>();
 	
+	public List<ClickArea> getClickZones() {
+		return clickZones;
+	}
+	
 	public void addClickZone(int x0, int y0, int x1, int y1, GameElement target) {
 		ClickArea region = new ClickArea(x0, y0, x1, y1);
 		region.setTarget(target);
+		target.setClickArea(region);
 		clickZones.add(region);
 	}
 	public void addClickZone(ClickArea z) {
@@ -67,6 +76,7 @@ public class GameViewport extends JLayeredPane implements MouseListener, MouseMo
 	}
 	public void removeClickZone(ClickArea zone) {
 		clickZones.remove(zone);
+		if (zone.getTarget() != null) zone.getTarget().setClickArea(null);
 	}
 	public ClickArea click(int x, int y) {
 		for (ClickArea zone : clickZones) {
@@ -100,26 +110,7 @@ public class GameViewport extends JLayeredPane implements MouseListener, MouseMo
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		/*
-		ClickArea zone = click(e.getX(), e.getY());
 		
-		if (zone == null) {
-			if (SwingUtilities.isLeftMouseButton(e)) {
-				StraightDominoesApp.game.handleClickEvent(); // generic, targetless left-click
-			}
-			else if (SwingUtilities.isRightMouseButton(e)) {
-				StraightDominoesApp.game.handleRightClickEvent(); // generic, targetless right-click
-			}
-			return;
-		}
-		
-		if (SwingUtilities.isLeftMouseButton(e)) {
-			StraightDominoesApp.game.handleClickEvent(zone.getTarget(), zone);
-		}
-		else if (SwingUtilities.isRightMouseButton(e)) {
-			StraightDominoesApp.game.handleRightClickEvent(zone.getTarget(), zone);
-		}
-		*/
 	}
 
 
@@ -135,22 +126,17 @@ public class GameViewport extends JLayeredPane implements MouseListener, MouseMo
 		
 		ClickArea zone = click(e.getX(), e.getY());
 		
-		if (zone == null) {
-			if (SwingUtilities.isLeftMouseButton(e)) {
-				StraightDominoesApp.game.handleClickEvent(); // generic, targetless left-click
-			}
-			else if (SwingUtilities.isRightMouseButton(e)) {
-				StraightDominoesApp.game.handleRightClickEvent(); // generic, targetless right-click
-			}
-			return;
+		if (SwingUtilities.isLeftMouseButton(e)) {
+			if (zone == null) { StraightDominoesApp.game.handleClickEvent(); } // generic, targetless left-click
+			else { StraightDominoesApp.game.handleClickEvent(zone.getTarget(), zone); }
 		}
 		
-		if (SwingUtilities.isLeftMouseButton(e)) {
-			StraightDominoesApp.game.handleClickEvent(zone.getTarget(), zone);
-		}
 		else if (SwingUtilities.isRightMouseButton(e)) {
-			StraightDominoesApp.game.handleRightClickEvent(zone.getTarget(), zone);
+			StraightDominoesApp.game.handleRightClickEvent();
 		}
+		
+		
+		System.out.println(clickZones);
 		
 	}
 

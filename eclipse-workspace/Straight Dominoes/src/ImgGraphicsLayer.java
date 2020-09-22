@@ -11,6 +11,10 @@ public class ImgGraphicsLayer extends LayerPanel {
 	
 	private List<GameElement> objects = new ArrayList<GameElement>();
 	
+	public List<GameElement> getObjects() {
+		return objects;
+	}
+	
 	public ImgGraphicsLayer() {
 		super();
 	}
