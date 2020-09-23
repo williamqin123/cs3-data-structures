@@ -14,7 +14,7 @@ public class ResourceMan {
 	public ResourceMan(String[] filesList) {
 		for (String path : filesList) {
 			try {
-				images.put(path.substring(path.lastIndexOf('/')+1), (BufferedImage)ImageIO.read(new File(path)));
+				images.put(path.substring(path.lastIndexOf('/')+1), (BufferedImage)ImageIO.read(this.getClass().getResource(path)));
 			}
 			catch (Exception E) {
 				System.out.println("Oopsie");

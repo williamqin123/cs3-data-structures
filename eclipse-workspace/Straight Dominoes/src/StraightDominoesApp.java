@@ -4,45 +4,45 @@ public class StraightDominoesApp {
 	public static String GAME_TITLE = "Domino Wars";
 	
 	private final static String[] filesList = {
-		"src/resources/new-bg.png",
+		"/resources/new-bg.png",
 			
-		"src/resources/new-domino-00.png",
-		"src/resources/new-domino-10.png",
-		"src/resources/new-domino-11.png",
-		"src/resources/new-domino-20.png",
-		"src/resources/new-domino-21.png",
-		"src/resources/new-domino-22.png",
-		"src/resources/new-domino-30.png",
-		"src/resources/new-domino-31.png",
-		"src/resources/new-domino-32.png",
-		"src/resources/new-domino-33.png",
-		"src/resources/new-domino-40.png",
-		"src/resources/new-domino-41.png",
-		"src/resources/new-domino-42.png",
-		"src/resources/new-domino-43.png",
-		"src/resources/new-domino-44.png",
-		"src/resources/new-domino-50.png",
-		"src/resources/new-domino-51.png",
-		"src/resources/new-domino-52.png",
-		"src/resources/new-domino-53.png",
-		"src/resources/new-domino-54.png",
-		"src/resources/new-domino-55.png",
-		"src/resources/new-domino-60.png",
-		"src/resources/new-domino-61.png",
-		"src/resources/new-domino-62.png",
-		"src/resources/new-domino-63.png",
-		"src/resources/new-domino-64.png",
-		"src/resources/new-domino-65.png",
-		"src/resources/new-domino-66.png",
+		"/resources/new-domino-00.png",
+		"/resources/new-domino-10.png",
+		"/resources/new-domino-11.png",
+		"/resources/new-domino-20.png",
+		"/resources/new-domino-21.png",
+		"/resources/new-domino-22.png",
+		"/resources/new-domino-30.png",
+		"/resources/new-domino-31.png",
+		"/resources/new-domino-32.png",
+		"/resources/new-domino-33.png",
+		"/resources/new-domino-40.png",
+		"/resources/new-domino-41.png",
+		"/resources/new-domino-42.png",
+		"/resources/new-domino-43.png",
+		"/resources/new-domino-44.png",
+		"/resources/new-domino-50.png",
+		"/resources/new-domino-51.png",
+		"/resources/new-domino-52.png",
+		"/resources/new-domino-53.png",
+		"/resources/new-domino-54.png",
+		"/resources/new-domino-55.png",
+		"/resources/new-domino-60.png",
+		"/resources/new-domino-61.png",
+		"/resources/new-domino-62.png",
+		"/resources/new-domino-63.png",
+		"/resources/new-domino-64.png",
+		"/resources/new-domino-65.png",
+		"/resources/new-domino-66.png",
 		
-		"src/resources/domino-shading-h.png",
-		"src/resources/domino-3d-h.png",
-		"src/resources/domino-shading-v.png",
-		"src/resources/domino-3d-v.png",
-		"src/resources/domino-shadow.png",
+		"/resources/domino-shading-h.png",
+		"/resources/domino-3d-h.png",
+		"/resources/domino-shading-v.png",
+		"/resources/domino-3d-v.png",
+		"/resources/domino-shadow.png",
 		
-		"src/resources/blue-rect.png",
-		"src/resources/blue-rect-hover.png"
+		"/resources/blue-rect.png",
+		"/resources/blue-rect-hover.png"
 	};
 	
 	public static ResourceMan storage;
@@ -54,7 +54,7 @@ public class StraightDominoesApp {
 	public static void main(String[] args) {
 		
 		// Enables hardware acceleration
-		System.setProperty("sun.java2d.opengl", "true");
+		//System.setProperty("sun.java2d.opengl", "true");
 		
 		storage = new ResourceMan(filesList);
 		
