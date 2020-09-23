@@ -5,10 +5,13 @@ import java.util.*;
 
 public class Game {
 	
+	private Domino spinner = null;
+	
+	private boolean occupied[][] = new boolean[1000 / 25][800 / 25];
+	
 	private int turn = -1;
 
 	private List<Domino> dominoes = new ArrayList<Domino>();
-	
 	private List<Domino> placedDominoes = new ArrayList<Domino>();
 	
 	private List<Player> players = new ArrayList<Player>();
@@ -19,14 +22,16 @@ public class Game {
 	
 	private DominoDropZone mouseOveredDropZone;
 	
-	private Dimension northBranchTailVector = new Dimension(0, -4);
-	private Dimension eastBranchTailVector = new Dimension(3, 0);
-	private Dimension southBranchTailVector = new Dimension(0, 4);
-	private Dimension westBranchTailVector = new Dimension(-3, 0);
-	private Domino lastPlayedNorthBranchDomino;
-	private Domino lastPlayedEastBranchDomino;
-	private Domino lastPlayedSouthBranchDomino;
-	private Domino lastPlayedWestBranchDomino;
+	
+	
+	private LinkedList<Domino> northBranch = new LinkedList<Domino>();
+	private LinkedList<Domino> eastBranch = new LinkedList<Domino>();
+	private LinkedList<Domino> southBranch = new LinkedList<Domino>();
+	private LinkedList<Domino> westBranch = new LinkedList<Domino>();
+	
+	private LinkedList[] branches = {northBranch, eastBranch, southBranch, westBranch};
+	
+	
 
 	public Game(GameViewport gl) {
 		g = gl;
@@ -189,38 +194,192 @@ public class Game {
 		return new int[]{(x - 700) / 25, (y - 400) / 25};
 	}
 	
+	public static Dimension negVect(Dimension v) {
+		return new Dimension(-v.width, -v.height);
+	}
+	
+	public static Dimension absVect(Dimension v) {
+		return new Dimension(Math.abs(v.width), Math.abs(v.height));
+	}
+	
+	public static Dimension flipVect(Dimension v) {
+		return new Dimension(v.height, v.width);
+	}
+	
+	
 	public void putDroppableRects() {
 		
+		g.glDropZones.clearRenderList();
+		clearBoardClickables();
+		
+		
+		
 		if (placedDominoes.size() == 0) {
-			DominoDropZone s = new DominoDropZone(0, 0, "spinner", new Dimension(0, 0));
-			s.rotate(90);
+			if (stickyElement.getRotation() % 180 != 0) new DominoDropZone(700, 425, null, GameElement.DIRECTION_NORTH);
 		}
 		else {
-			if (lastPlayedEastBranchDomino == null) {
-		
-				DominoDropZone e = new DominoDropZone(eastBranchTailVector.width, eastBranchTailVector.height, "east", new Dimension(4, 0));
-			}
-			else {
-				DominoDropZone eu = new DominoDropZone(antiCartesian(lastPlayedEastBranchDomino.getX() + lastPlayedEastBranchDomino.getHeight() / 2, 0)[0] + eastBranchTailVector.width, antiCartesian(0, lastPlayedEastBranchDomino.getY())[1] + eastBranchTailVector.height, "east", new Dimension(0, -4));
-				DominoDropZone ed = new DominoDropZone(antiCartesian(lastPlayedEastBranchDomino.getX() + lastPlayedEastBranchDomino.getHeight() / 2, 0)[0] + eastBranchTailVector.width, antiCartesian(0, lastPlayedEastBranchDomino.getY() + lastPlayedEastBranchDomino.getWidth() / 2)[1] + eastBranchTailVector.height, "east", new Dimension(0, 4));
-				DominoDropZone e = new DominoDropZone(antiCartesian(lastPlayedEastBranchDomino.getX() + lastPlayedEastBranchDomino.getWidth() / 2, 0)[0] + eastBranchTailVector.width, antiCartesian(0, lastPlayedEastBranchDomino.getY() + lastPlayedEastBranchDomino.getHeight() / 2)[1] + eastBranchTailVector.height, "east", new Dimension(4, 0));
-				eu.rotate(90);
-				ed.rotate(90);
-			}
-			if (lastPlayedWestBranchDomino == null) {
-
-				DominoDropZone w = new DominoDropZone(westBranchTailVector.width, westBranchTailVector.height, "west", new Dimension(westBranchTailVector));
+			for (LinkedList<Domino> branch : branches) {
+				Domino tail = branch.getLast();
+				
+				int x = 0;
+				int y = 0;
+				int direction = 0;
+				
+				if (branch.size() > 1) {
+					Domino prev = branch.get(branch.size() - 2);
+					
+					if (tail.getBoundsCenterX() == prev.getBoundsCenterX()) {
+						x = tail.getBoundsCenterX();
+						if (tail.getBoundsCenterY() > prev.getBoundsCenterY()) {
+							y = tail.getBoundsCenterY() + 75 + Domino.DOMINO_DEPTH;
+							direction = GameElement.DIRECTION_SOUTH;
+						}
+						else {
+							y = tail.getBoundsCenterY() - 75 + Domino.DOMINO_DEPTH;
+							direction = GameElement.DIRECTION_NORTH;
+						}
+					}
+					else if (tail.getBoundsCenterY() == prev.getBoundsCenterY()) {
+						y = tail.getBoundsCenterY() + Domino.DOMINO_DEPTH;
+						if (tail.getBoundsCenterX() > prev.getBoundsCenterX()) {
+							x = tail.getBoundsCenterX() + 75;
+							direction = GameElement.DIRECTION_EAST;
+						}
+						else {
+							x = tail.getBoundsCenterX() - 75;
+							direction = GameElement.DIRECTION_WEST;
+						}
+					}
+					
+					else if (tail.getBoundsCenterY() != prev.getBoundsCenterY() && Math.abs(tail.getBoundsCenterY() - prev.getBoundsCenterY()) <= 25) {
+						x = tail.getBoundsCenterX();
+						if (tail.getBoundsCenterY() > prev.getBoundsCenterY()) {
+							y = tail.getBoundsCenterY() + 75 + Domino.DOMINO_DEPTH;
+							direction = GameElement.DIRECTION_SOUTH;
+						}
+						else {
+							y = tail.getBoundsCenterY() - 75 + Domino.DOMINO_DEPTH;
+							direction = GameElement.DIRECTION_NORTH;
+						}
+					}
+					else if (tail.getBoundsCenterX() != prev.getBoundsCenterX() && Math.abs(tail.getBoundsCenterX() - prev.getBoundsCenterX()) <= 25) {
+						y = tail.getBoundsCenterY() + Domino.DOMINO_DEPTH;
+						if (tail.getBoundsCenterX() > prev.getBoundsCenterX()) {
+							x = tail.getBoundsCenterX() + 75;
+							direction = GameElement.DIRECTION_EAST;
+						}
+						else {
+							x = tail.getBoundsCenterX() - 75;
+							direction = GameElement.DIRECTION_WEST;
+						}
+					}
+				}
+				else {
+					if (branch == northBranch && eastBranch.size() > 1 && westBranch.size() > 1) {
+						x = 700;
+						y = 325;
+						direction = GameElement.DIRECTION_NORTH;
+					}
+					else if (branch == eastBranch) {
+						x = 750;
+						y = 400;
+						direction = GameElement.DIRECTION_EAST;
+					}
+					else if (branch == southBranch && eastBranch.size() > 1 && westBranch.size() > 1) {
+						x = 700;
+						y = 475;
+						direction = GameElement.DIRECTION_SOUTH;
+					}
+					else if (branch == westBranch) {
+						x = 650;
+						y = 400;
+						direction = GameElement.DIRECTION_WEST;
+					}
+					else {
+						continue;
+					}
+				}
+				
+				tail.openTilePips = tail.getHalfPips(direction);
+				
+				/*
+				int pipsToMatch = ((Domino)stickyElement).getHalfPips(direction + 180);
+				
+				if (direction % 180 == (int)(stickyElement.getRotation()) % 180) {
+					
+					System.out.println(direction % 180);
+					System.out.println((int)(stickyElement.getRotation()) % 180);
+					
+					if (tail.getRotation() % 180 == stickyElement.getRotation() % 180) {
+						if (tail.getHalfPips(direction) != pipsToMatch) {
+							continue;
+						}
+					}
+					else if (tail.type == Domino.PERPENDICULAR) {
+					
+						if (tail.getPips()[0] != pipsToMatch && tail.getPips()[1] != pipsToMatch) {
+							continue;
+						}
+					}
+				}
+				else {
+					continue;
+				}
+				*/
+				
+				Domino floating = ((Domino)stickyElement);
+				
+				if (tail.type == Domino.INLINE) {
+					if (floating.getHalfPips(GameElement.DIRECTION_SOUTH) == tail.openTilePips && direction != GameElement.DIRECTION_SOUTH) {
+						direction = GameElement.DIRECTION_NORTH;
+					}
+					else if (floating.getHalfPips(GameElement.DIRECTION_WEST) == tail.openTilePips && direction != GameElement.DIRECTION_WEST) {
+						direction = GameElement.DIRECTION_EAST;
+					}
+					else if (floating.getHalfPips(GameElement.DIRECTION_NORTH) == tail.openTilePips && direction != GameElement.DIRECTION_NORTH) {
+						direction = GameElement.DIRECTION_SOUTH;
+					}
+					else if (floating.getHalfPips(GameElement.DIRECTION_EAST) == tail.openTilePips && direction != GameElement.DIRECTION_EAST) {
+						direction = GameElement.DIRECTION_WEST;
+					}
+					else {
+						continue;
+					}
+				}
+				else if (tail.type == Domino.PERPENDICULAR) {
+					if (!(floating.getHalfPips(direction + 180) == tail.getPips()[0] || floating.getHalfPips(direction + 180) == tail.getPips()[1])) {
+						continue;
+					}
+				}
+				
+				int dx = x;
+				int dy = y;
+				
+				switch (direction) {
+				case 270:
+					dy -= 50; break;
+				case 0:
+					dx += 50; break;
+				case 90:
+					dy += 50; break;
+				case 180:
+					dx -= 50; break;
+				}
+				
+				if (occupied[(x - 200) / 25][y / 25] || occupied[(x - 200) / 25 - 1][y / 25] || occupied[(x - 200) / 25][y / 25 - 1] || occupied[(x - 200) / 25 - 1][y / 25 - 1]
+				||  occupied[(dx - 200) / 25][dy / 25] || occupied[(dx - 200) / 25 - 1][dy / 25] || occupied[(dx - 200) / 25][dy / 25 - 1] || occupied[(dx - 200) / 25 - 1][dy / 25 - 1]) {
+					
+					continue;
+				}
+				
+				new DominoDropZone(x, y, branch, direction);
 			}
 		}
 		
+		
+		
 		for (GameElement zone : g.glDropZones.getObjects()) {
-			ClickArea z;
-			if (zone.getRotation() == 0) {
-				z = new ClickArea(zone.getX() + zone.getDX(), zone.getY() + zone.getDY(), zone.getX() + zone.getWidth() + zone.getDX(), zone.getY() + zone.getHeight() + zone.getDY());
-			}
-			else {
-				z = new ClickArea(zone.getX() + zone.getDY(), zone.getY() + zone.getDX(), zone.getX() + zone.getHeight() + zone.getDY(), zone.getY() + zone.getWidth() + zone.getDX());
-			}
+			ClickArea z = new ClickArea(zone.getLeftBound(), zone.getTopBound(), zone.getRightBound(), zone.getBottomBound());
 			z.setTarget(zone);
 			z.setName("place-domino");
 			g.addClickZone(z);
@@ -255,6 +414,16 @@ public class Game {
 		
 	}
 	
+	public void clearBoardClickables() {
+		for (Iterator<ClickArea> iterator = g.getClickZones().iterator(); iterator.hasNext(); ) {
+			ClickArea a = iterator.next();
+		    if (a.getName().equals("place-domino")) {
+		    	if (a.getTarget() != null) a.getTarget().setClickArea(null);
+				iterator.remove();
+			}
+		}
+	}
+	
 	public void clearDominoClickables() {
 		for (Iterator<ClickArea> iterator = g.getClickZones().iterator(); iterator.hasNext(); ) {
 			ClickArea a = iterator.next();
@@ -285,30 +454,51 @@ public class Game {
 			nextTurn();
 		}
 		
-		else if (zone.getName().equals("place-domino") && (stickyElement.getRotation() == el.getRotation() || stickyElement.getRotation() % 180 == el.getRotation())) {
+		else if (zone.getName().equals("place-domino")) {
 			
 			// Put domino
+			
+			Player ap = getActivePlayer();
 
-			getActivePlayer().hand.remove(stickyElement);
-			stickyElement.centerX(el.getX());
-			stickyElement.centerY(el.getY());
+			ap.hand.remove(stickyElement);
+			
+			int x = el.getBoundsCenterX();
+			int y = el.getBoundsCenterY();
+			
+			stickyElement.centerX(x);
+			stickyElement.centerY(y);
 			stickyElement.setDY(-5);
 			stickyElement.setLayer(g.Z_INDEX_BASE);
 			placedDominoes.add((Domino) stickyElement);
 			g.glDropZones.clearRenderList();
 			
-			String branch = ((DominoDropZone) el).getBranchName();
+			occupied[(x - 200) / 25][y / 25] = true;
+			occupied[(x - 200) / 25 - 1][y / 25] = true;	
+			occupied[(x - 200) / 25][y / 25 - 1] = true;
+			occupied[(x - 200) / 25 - 1][y / 25 - 1] = true;
 			
-			switch (branch) {
-			case "north":
-				lastPlayedNorthBranchDomino = (Domino) stickyElement;
-			case "east":
-				lastPlayedEastBranchDomino = (Domino) stickyElement;
-				eastBranchTailVector = ((DominoDropZone)zone.getTarget()).getVec();
-			case "south":
-				lastPlayedSouthBranchDomino = (Domino) stickyElement;
-			case "west":
-				lastPlayedWestBranchDomino = (Domino) stickyElement;
+			if (stickyElement.getRotation() % 180 == 0) {
+				occupied[(x - 200) / 25 + 1][y / 25] = true;
+				occupied[(x - 200) / 25 - 2][y / 25] = true;	
+				occupied[(x - 200) / 25 + 1][y / 25 - 1] = true;
+				occupied[(x - 200) / 25 - 2][y / 25 - 1] = true;
+			} else {
+				occupied[(x - 200) / 25][y / 25 + 1] = true;
+				occupied[(x - 200) / 25 - 1][y / 25 + 1] = true;	
+				occupied[(x - 200) / 25][y / 25 - 2] = true;
+				occupied[(x - 200) / 25 - 1][y / 25 - 2] = true;
+			}
+			
+			
+			if (placedDominoes.size() == 1) {
+				((Domino)stickyElement).type = Domino.PERPENDICULAR;
+				for (LinkedList<Domino> branch : branches) {
+					branch.add((Domino) stickyElement);
+				}
+			}
+			else {
+				((DominoDropZone) el).branch.add((Domino) stickyElement);
+				//ap.addPoints(((DominoDropZone) el).branch.getLast().openTilePips);
 			}
 			
 			stickyElement = null;
@@ -318,7 +508,7 @@ public class Game {
 		
 		else if (el instanceof Domino && getActivePlayer().hand.contains(el)) {
 			
-			System.out.println("Domino pressed");
+			//System.out.println("Domino pressed");
 			clearDominoClickables();
 			stickyElement = el;
 			el.setDY(-20);
@@ -348,6 +538,8 @@ public class Game {
 			
 			stickyElement.rotate(90);
 			
+			putDroppableRects();
+			
 			repaintActiveLayers();
 		}
 	}
@@ -358,11 +550,13 @@ public class Game {
 		stickyElement.centerX(x);
 		stickyElement.centerY(y);
 		
-		ClickArea hover = g.click(x, y);
+		ClickArea hover = g.click((int)(x * g.getScale()), (int)(y * g.getScale()));
 		
 		if (hover != null && (hover.getTarget() instanceof DominoDropZone)) {
 			hover.getTarget().setImage("blue-rect-hover.png");
 			mouseOveredDropZone = (DominoDropZone) hover.getTarget();
+			stickyElement.centerX(hover.getTarget().getBoundsCenterX());
+			stickyElement.centerY(hover.getTarget().getBoundsCenterY());
 		}
 		else if (mouseOveredDropZone != null) {
 			mouseOveredDropZone.setImage("blue-rect.png");

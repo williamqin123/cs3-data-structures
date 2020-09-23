@@ -6,6 +6,14 @@ import java.util.List;
 
 public class GameElement {
 	
+	public final static int DIRECTION_NORTH = 270;
+	public final static int DIRECTION_EAST = 0;
+	public final static int DIRECTION_SOUTH = 90;
+	public final static int DIRECTION_WEST = 180;
+	
+	protected int rotationOriginX = (int) Double.NEGATIVE_INFINITY;
+	protected int rotationOriginY = (int) Double.NEGATIVE_INFINITY;
+	
 	protected Animation animation;
 	
 	public void setAnimation(Animation a) {animation = a;}
@@ -76,6 +84,12 @@ public class GameElement {
 	public void setHeight(int h) {height = h;}
 	public int getHeight() {return height;}
 	
+	public void setRotationOriginX(int xo) {rotationOriginX = xo;}
+	public int getRotationOriginX() {return (rotationOriginX == (int) Double.NEGATIVE_INFINITY) ? getWidth() / 2 : rotationOriginX;}
+	
+	public void setRotationOriginY(int yo) {rotationOriginY = yo;}
+	public int getRotationOriginY() {return (rotationOriginY == (int) Double.NEGATIVE_INFINITY) ? getHeight() / 2 : rotationOriginY;}
+	
 	public void setX(int x) {this.x = x;}
 	public int getX() {return (parent == null || !followParentPosition) ? x : x + parent.getX();}
 	
@@ -111,5 +125,54 @@ public class GameElement {
 	}
 	public void setClickArea(ClickArea clickArea) {
 		this.clickArea = clickArea;
+	}
+	
+	
+	
+	// These should use trig to work with all angles, but I'm lazy
+	
+	public int getTopBound() {
+		int yVal = getY() + getDY();
+		switch ((int) rotation) {
+		case 0:
+			return yVal;
+		case 90:
+			return yVal - (getRotationOriginX() - getRotationOriginY());
+		case 180:
+			return yVal - (getHeight() - 2 * getRotationOriginY());
+		case 270:
+			return yVal - (getWidth() - getRotationOriginX() - getRotationOriginY());
+		default:
+			return 0;
+		//	throw new Exception("Bounds supported for right-angle rotations only");
+		}
+	}
+	public int getLeftBound() {
+		int xVal = getX() + getDX();
+		switch ((int) rotation) {
+		case 0:
+			return xVal;
+		case 90:
+			return xVal - (getHeight() - getRotationOriginY() - getRotationOriginX());
+		case 180:
+			return xVal - (getWidth() - 2 * getRotationOriginX());
+		case 270:
+			return xVal - (getRotationOriginY() - getRotationOriginX());
+		default:
+			return 0;
+		//	throw new Exception("Bounds supported for right-angle rotations only");
+		}
+	}
+	public int getBottomBound() {
+		return getTopBound() + ((rotation % 180 == 0) ? getHeight() : getWidth());
+	}
+	public int getRightBound() {
+		return getLeftBound() + ((rotation % 180 == 0) ? getWidth() : getHeight());
+	}
+	public int getBoundsCenterX() {
+		return (getLeftBound() + getRightBound()) / 2;
+	}
+	public int getBoundsCenterY() {
+		return (getTopBound() + getBottomBound()) / 2;
 	}
 }

@@ -42,10 +42,10 @@ public class ImgGraphicsLayer extends LayerPanel {
 			
 			AffineTransform initialTransform = g2.getTransform();
 			
-			g2.translate((img.getX() + img.getDX() + img.getWidth() / 2) * scale, (img.getY() + img.getDY() + img.getHeight() / 2) * scale);
+			g2.translate((img.getX() + img.getDX() + img.getRotationOriginX()) * scale, (img.getY() + img.getDY() + img.getRotationOriginY()) * scale);
 			g2.rotate(Math.toRadians(img.getRotation()));
 			
-			g2.drawImage(img.getRawImage(), (int) (-img.getWidth() / 2 * scale), (int) (-img.getHeight() / 2 * scale), (int) (img.getWidth() * scale), (int) (img.getHeight() * scale), null);
+			g2.drawImage(img.getRawImage(), (int) (-img.getRotationOriginX() * scale), (int) (-img.getRotationOriginY() * scale), (int) (img.getWidth() * scale), (int) (img.getHeight() * scale), null);
 			
 			g2.setTransform(initialTransform);
 		}

@@ -68,13 +68,13 @@ public class Window extends JFrame {
 		verticalBox.add(Box.createVerticalGlue());
 		viewport.setAlignmentY(Component.CENTER_ALIGNMENT);
 		verticalBox.add(viewport);
-		verticalBox.add(Box.createVerticalGlue());
+		//verticalBox.add(Box.createVerticalGlue());
 		
 		Box horizontalBox = Box.createHorizontalBox();
 		horizontalBox.add(Box.createHorizontalGlue());
 		verticalBox.setAlignmentX(Component.CENTER_ALIGNMENT);
 		horizontalBox.add(verticalBox);
-		horizontalBox.add(Box.createHorizontalGlue());
+		//horizontalBox.add(Box.createHorizontalGlue());
 		
 		add(horizontalBox);
 		

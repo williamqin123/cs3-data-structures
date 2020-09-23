@@ -135,8 +135,7 @@ public class GameViewport extends JLayeredPane implements MouseListener, MouseMo
 			StraightDominoesApp.game.handleRightClickEvent();
 		}
 		
-		
-		System.out.println(clickZones);
+		//System.out.println(clickZones);
 		
 	}
 

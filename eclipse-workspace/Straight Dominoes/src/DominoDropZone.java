@@ -1,28 +1,34 @@
 import java.awt.Dimension;
+import java.util.LinkedList;
 
 public class DominoDropZone extends GameElement {
 	
-	private String branch;
+	public LinkedList<Domino> branch;
 	
 	private Dimension vector;
 	
-	public DominoDropZone(int x, int y, String branch, Dimension vector) {
+	public DominoDropZone(int x, int y, LinkedList branch, int orientation) {
 		super(StraightDominoesApp.storage.get("blue-rect.png"));
 		
 		this.branch = branch;
 		
 		this.vector = vector;
 		
-		int[] pos = Game.cartesian(x, y);
+		//int[] pos = Game.cartesian(x, y);
 		
 		width = 110;
 		height = 60;
 		
-		this.x = pos[0];
-		this.y = pos[1];
+		this.x = x;
+		this.y = y;
 		
-		this.relativeOffsetX = -55;
+		this.relativeOffsetX = -30;
 		this.relativeOffsetY = -30;
+		
+		rotationOriginX = 30;
+		rotationOriginY = 30;
+		
+		rotation = orientation;
 		
 		StraightDominoesApp.window.viewport.glDropZones.addDrawable(this);
 		
@@ -31,10 +37,6 @@ public class DominoDropZone extends GameElement {
 	
 	public void remove() {
 		StraightDominoesApp.window.viewport.glDropZones.removeDrawable(this);
-	}
-
-	public String getBranchName() {
-		return branch;
 	}
 	
 	public Dimension getVec() {
