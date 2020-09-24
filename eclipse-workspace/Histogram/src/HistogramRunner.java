@@ -17,5 +17,7 @@ public class HistogramRunner {
 			
 			System.out.println(); // space between histograms
 		}
+		
+		scanner.close();
 	}
 }

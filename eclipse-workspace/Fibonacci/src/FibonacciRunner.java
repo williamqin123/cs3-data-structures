@@ -27,5 +27,7 @@ public class FibonacciRunner {
 			
 			System.out.println("XXXXXX"); // separator
 		}
+		
+		scanner.close();
 	}
 }
