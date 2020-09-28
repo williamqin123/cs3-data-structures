@@ -49,7 +49,7 @@ public class GameViewport extends JLayeredPane implements MouseListener, MouseMo
 		glHandThickness,
 		glHandDominoes, //8
 		glHandOverlays,
-		glHUD,
+		glHUD, //10
 		glActiveShadow,
 		glActiveThickness,
 		glActiveDominoes, //13

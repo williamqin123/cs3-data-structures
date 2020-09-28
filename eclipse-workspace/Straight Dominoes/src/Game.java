@@ -7,9 +7,18 @@ public class Game {
 	
 	private Domino spinner = null;
 	
-	private boolean occupied[][] = new boolean[1000 / 25][800 / 25];
+	public static int[] playingBoardXBounds = {
+		200, 700, 1200 // left, middle, right
+	};
+	public static int[] playingBoardYBounds = {
+		0, 400, 800 // top, middle, bottom
+	};
 	
-	private int turn = -1;
+	private boolean occupied[][] = new boolean[(playingBoardXBounds[2] - playingBoardXBounds[0]) / 25][(playingBoardYBounds[2] - playingBoardXBounds[0]) / 25];
+	
+	private int playerCount = 4;
+	
+	private int turn = (int)(Math.random() * playerCount);
 
 	private List<Domino> dominoes = new ArrayList<Domino>();
 	private List<Domino> placedDominoes = new ArrayList<Domino>();
@@ -30,6 +39,8 @@ public class Game {
 	private LinkedList<Domino> westBranch = new LinkedList<Domino>();
 	
 	private LinkedList[] branches = {northBranch, eastBranch, southBranch, westBranch};
+
+	private CenterAlignedTextLabel topMessage;
 	
 	
 
@@ -69,6 +80,9 @@ public class Game {
 			for (int n2 = 0; n2 <= n1; n2++) {
 				Domino d = new Domino(n1, n2);
 				dominoes.add(d);
+				if (n1 == n2) {
+					d.type = Domino.PERPENDICULAR;
+				}
 			}
 		}
 	}
@@ -131,7 +145,7 @@ public class Game {
 		
 		clearDominoClickables();
 		
-		Player previousPlayer = players.get(Math.max(turn, 0));
+		Player previousPlayer = players.get(turn);
 		((TextLabel) previousPlayer.linkedObjects.get("nametag")).removeFlag("scoreboard-active");
 		((TextLabel) previousPlayer.linkedObjects.get("round-points")).removeFlag("scoreboard-active");
 		((TextLabel) previousPlayer.linkedObjects.get("total-points")).removeFlag("scoreboard-active");
@@ -144,7 +158,14 @@ public class Game {
 		((TextLabel) currentPlayer.linkedObjects.get("round-points")).addFlag("scoreboard-active");
 		((TextLabel) currentPlayer.linkedObjects.get("total-points")).addFlag("scoreboard-active");
 		
-		g.glHUD.repaint();
+		if (placedDominoes.size() == 0) {
+			topMessage.setText("Player " + (turn + 1) + " goes first. Click a domino to pick it up, right-click to rotate 90º.");
+		}
+		else {
+			topMessage.setText("");
+		}
+		
+		 updateDisplayedScores();
 	}
 	
 	private void updateDisplayedScores() {
@@ -212,10 +233,12 @@ public class Game {
 		g.glDropZones.clearRenderList();
 		clearBoardClickables();
 		
+
 		
+		Domino floating = ((Domino)stickyElement);
 		
 		if (placedDominoes.size() == 0) {
-			if (stickyElement.getRotation() % 180 != 0) new DominoDropZone(700, 425, null, GameElement.DIRECTION_NORTH);
+			if (floating.getAxisOrientation() == Domino.VERTICAL_AXIS) new DominoDropZone(playingBoardXBounds[1], playingBoardYBounds[1] + 25, null, GameElement.DIRECTION_NORTH);
 		}
 		else {
 			for (LinkedList<Domino> branch : branches) {
@@ -224,133 +247,168 @@ public class Game {
 				int x = 0;
 				int y = 0;
 				int direction = 0;
+
+				int leadingXCenter;
+				int leadingYCenter;
 				
 				if (branch.size() > 1) {
-					Domino prev = branch.get(branch.size() - 2);
-					
-					if (tail.getBoundsCenterX() == prev.getBoundsCenterX()) {
-						x = tail.getBoundsCenterX();
-						if (tail.getBoundsCenterY() > prev.getBoundsCenterY()) {
-							y = tail.getBoundsCenterY() + 75 + Domino.DOMINO_DEPTH;
-							direction = GameElement.DIRECTION_SOUTH;
-						}
-						else {
-							y = tail.getBoundsCenterY() - 75 + Domino.DOMINO_DEPTH;
-							direction = GameElement.DIRECTION_NORTH;
-						}
-					}
-					else if (tail.getBoundsCenterY() == prev.getBoundsCenterY()) {
-						y = tail.getBoundsCenterY() + Domino.DOMINO_DEPTH;
-						if (tail.getBoundsCenterX() > prev.getBoundsCenterX()) {
-							x = tail.getBoundsCenterX() + 75;
-							direction = GameElement.DIRECTION_EAST;
-						}
-						else {
-							x = tail.getBoundsCenterX() - 75;
-							direction = GameElement.DIRECTION_WEST;
-						}
-					}
-					
-					else if (tail.getBoundsCenterY() != prev.getBoundsCenterY() && Math.abs(tail.getBoundsCenterY() - prev.getBoundsCenterY()) <= 25) {
-						x = tail.getBoundsCenterX();
-						if (tail.getBoundsCenterY() > prev.getBoundsCenterY()) {
-							y = tail.getBoundsCenterY() + 75 + Domino.DOMINO_DEPTH;
-							direction = GameElement.DIRECTION_SOUTH;
-						}
-						else {
-							y = tail.getBoundsCenterY() - 75 + Domino.DOMINO_DEPTH;
-							direction = GameElement.DIRECTION_NORTH;
-						}
-					}
-					else if (tail.getBoundsCenterX() != prev.getBoundsCenterX() && Math.abs(tail.getBoundsCenterX() - prev.getBoundsCenterX()) <= 25) {
-						y = tail.getBoundsCenterY() + Domino.DOMINO_DEPTH;
-						if (tail.getBoundsCenterX() > prev.getBoundsCenterX()) {
-							x = tail.getBoundsCenterX() + 75;
-							direction = GameElement.DIRECTION_EAST;
-						}
-						else {
-							x = tail.getBoundsCenterX() - 75;
-							direction = GameElement.DIRECTION_WEST;
-						}
-					}
+					leadingXCenter = branch.get(branch.size() - 2).getBoundsCenterX();
+					leadingYCenter = branch.get(branch.size() - 2).getBoundsCenterY();
 				}
 				else {
 					if (branch == northBranch && eastBranch.size() > 1 && westBranch.size() > 1) {
-						x = 700;
-						y = 325;
-						direction = GameElement.DIRECTION_NORTH;
+						leadingXCenter = playingBoardXBounds[1];
+						leadingYCenter = (int)Double.POSITIVE_INFINITY;
 					}
 					else if (branch == eastBranch) {
-						x = 750;
-						y = 400;
-						direction = GameElement.DIRECTION_EAST;
+						leadingXCenter = (int)Double.NEGATIVE_INFINITY;
+						leadingYCenter = playingBoardYBounds[1] - Domino.DOMINO_DEPTH;
 					}
 					else if (branch == southBranch && eastBranch.size() > 1 && westBranch.size() > 1) {
-						x = 700;
-						y = 475;
-						direction = GameElement.DIRECTION_SOUTH;
+						leadingXCenter = playingBoardXBounds[1];
+						leadingYCenter = (int)Double.NEGATIVE_INFINITY;
 					}
 					else if (branch == westBranch) {
-						x = 650;
-						y = 400;
-						direction = GameElement.DIRECTION_WEST;
+						leadingXCenter = (int)Double.POSITIVE_INFINITY;
+						leadingYCenter = playingBoardYBounds[1] - Domino.DOMINO_DEPTH;
 					}
 					else {
 						continue;
+					}
+				}
+					
+				if (tail.getBoundsCenterX() == leadingXCenter) {
+					x = tail.getBoundsCenterX();
+					if (tail.getBoundsCenterY() > leadingYCenter) {
+						y = tail.getBoundsCenterY() + 75 + Domino.DOMINO_DEPTH;
+						direction = GameElement.DIRECTION_SOUTH;
+					}
+					else {
+						y = tail.getBoundsCenterY() - 75 + Domino.DOMINO_DEPTH;
+						direction = GameElement.DIRECTION_NORTH;
+					}
+				}
+				else if (tail.getBoundsCenterY() == leadingYCenter) {
+					y = tail.getBoundsCenterY() + Domino.DOMINO_DEPTH;
+					if (tail.getBoundsCenterX() > leadingXCenter) {
+						x = tail.getBoundsCenterX() + 75;
+						direction = GameElement.DIRECTION_EAST;
+					}
+					else {
+						x = tail.getBoundsCenterX() - 75;
+						direction = GameElement.DIRECTION_WEST;
+					}
+				}
+				
+				else if (tail.getBoundsCenterY() != leadingYCenter && Math.abs(tail.getBoundsCenterY() - leadingYCenter) <= 25) {
+					x = tail.getBoundsCenterX();
+					if (tail.getBoundsCenterY() > leadingYCenter) {
+						y = tail.getBoundsCenterY() + 75 + Domino.DOMINO_DEPTH;
+						direction = GameElement.DIRECTION_SOUTH;
+					}
+					else {
+						y = tail.getBoundsCenterY() - 75 + Domino.DOMINO_DEPTH;
+						direction = GameElement.DIRECTION_NORTH;
+					}
+				}
+				else if (tail.getBoundsCenterX() != leadingXCenter && Math.abs(tail.getBoundsCenterX() - leadingXCenter) <= 25) {
+					y = tail.getBoundsCenterY() + Domino.DOMINO_DEPTH;
+					if (tail.getBoundsCenterX() > leadingXCenter) {
+						x = tail.getBoundsCenterX() + 75;
+						direction = GameElement.DIRECTION_EAST;
+					}
+					else {
+						x = tail.getBoundsCenterX() - 75;
+						direction = GameElement.DIRECTION_WEST;
 					}
 				}
 				
 				tail.openTilePips = tail.getHalfPips(direction);
 				
-				/*
-				int pipsToMatch = ((Domino)stickyElement).getHalfPips(direction + 180);
-				
-				if (direction % 180 == (int)(stickyElement.getRotation()) % 180) {
-					
-					System.out.println(direction % 180);
-					System.out.println((int)(stickyElement.getRotation()) % 180);
-					
-					if (tail.getRotation() % 180 == stickyElement.getRotation() % 180) {
-						if (tail.getHalfPips(direction) != pipsToMatch) {
-							continue;
-						}
-					}
-					else if (tail.type == Domino.PERPENDICULAR) {
-					
-						if (tail.getPips()[0] != pipsToMatch && tail.getPips()[1] != pipsToMatch) {
-							continue;
-						}
-					}
-				}
-				else {
-					continue;
-				}
-				*/
-				
-				Domino floating = ((Domino)stickyElement);
+				x -= playingBoardXBounds[0];
+				y -= playingBoardYBounds[0];
 				
 				if (tail.type == Domino.INLINE) {
-					if (floating.getHalfPips(GameElement.DIRECTION_SOUTH) == tail.openTilePips && direction != GameElement.DIRECTION_SOUTH) {
-						direction = GameElement.DIRECTION_NORTH;
+					if (floating.type == Domino.INLINE) {
+						if (floating.getHalfPips(GameElement.DIRECTION_SOUTH) == tail.openTilePips && direction != GameElement.DIRECTION_SOUTH) {
+							direction = GameElement.DIRECTION_NORTH;
+						}
+						else if (floating.getHalfPips(GameElement.DIRECTION_WEST) == tail.openTilePips && direction != GameElement.DIRECTION_WEST) {
+							direction = GameElement.DIRECTION_EAST;
+						}
+						else if (floating.getHalfPips(GameElement.DIRECTION_NORTH) == tail.openTilePips && direction != GameElement.DIRECTION_NORTH) {
+							direction = GameElement.DIRECTION_SOUTH;
+						}
+						else if (floating.getHalfPips(GameElement.DIRECTION_EAST) == tail.openTilePips && direction != GameElement.DIRECTION_EAST) {
+							direction = GameElement.DIRECTION_WEST;
+						}
+						else {
+							continue;
+						}
 					}
-					else if (floating.getHalfPips(GameElement.DIRECTION_WEST) == tail.openTilePips && direction != GameElement.DIRECTION_WEST) {
-						direction = GameElement.DIRECTION_EAST;
-					}
-					else if (floating.getHalfPips(GameElement.DIRECTION_NORTH) == tail.openTilePips && direction != GameElement.DIRECTION_NORTH) {
-						direction = GameElement.DIRECTION_SOUTH;
-					}
-					else if (floating.getHalfPips(GameElement.DIRECTION_EAST) == tail.openTilePips && direction != GameElement.DIRECTION_EAST) {
-						direction = GameElement.DIRECTION_WEST;
-					}
-					else {
-						continue;
+					else if (floating.type == Domino.PERPENDICULAR) {
+						if (floating.getHalfPips(GameElement.DIRECTION_NORTH) == floating.getHalfPips(GameElement.DIRECTION_SOUTH)
+						&&  floating.getHalfPips(GameElement.DIRECTION_NORTH) == tail.openTilePips
+						&&  (direction == GameElement.DIRECTION_EAST || direction == GameElement.DIRECTION_WEST)) {
+							direction = GameElement.DIRECTION_SOUTH;
+							y -= 25;
+							//System.out.println("y");
+						}
+						else if (floating.getHalfPips(GameElement.DIRECTION_EAST) == floating.getHalfPips(GameElement.DIRECTION_WEST)
+						&&  floating.getHalfPips(GameElement.DIRECTION_EAST) == tail.openTilePips
+						&&  (direction == GameElement.DIRECTION_NORTH || direction == GameElement.DIRECTION_SOUTH)) {
+							direction = GameElement.DIRECTION_EAST;
+							x -= 25;
+							//System.out.println("x");
+						}
+						else {
+							continue;
+						}
 					}
 				}
 				else if (tail.type == Domino.PERPENDICULAR) {
-					if (!(floating.getHalfPips(direction + 180) == tail.getPips()[0] || floating.getHalfPips(direction + 180) == tail.getPips()[1])) {
+					
+					if (floating.type == Domino.PERPENDICULAR) continue; // no doubles to doubles or doubles off the spinner
+					
+					int backEndPips = floating.getHalfPips(direction + 180);
+					
+					if (backEndPips == -1) continue; // a perpendicular must be followed by an inline
+					
+					if ((direction == Domino.DIRECTION_EAST || direction == Domino.DIRECTION_WEST)
+					&& (backEndPips == tail.getHalfPips(Domino.DIRECTION_NORTH) || backEndPips == tail.getHalfPips(Domino.DIRECTION_SOUTH))) {}
+					
+					else if ((direction == Domino.DIRECTION_NORTH || direction == Domino.DIRECTION_SOUTH)
+					&& (backEndPips == tail.getHalfPips(Domino.DIRECTION_EAST) || backEndPips == tail.getHalfPips(Domino.DIRECTION_WEST))) {}
+					/*
+					else if (direction == Domino.DIRECTION_NORTH && backEndPips == tail.getHalfPips(Domino.DIRECTION_NORTH)) {}
+					else if (direction == Domino.DIRECTION_SOUTH && backEndPips == tail.getHalfPips(Domino.DIRECTION_SOUTH)) {}
+					else if (direction == Domino.DIRECTION_EAST && backEndPips == tail.getHalfPips(Domino.DIRECTION_EAST)) {}
+					else if (direction == Domino.DIRECTION_WEST && backEndPips == tail.getHalfPips(Domino.DIRECTION_WEST)) {}
+					*/
+					else if (backEndPips == tail.getHalfPips(direction)) {}
+					else {
 						continue;
 					}
+					
+					if (floating.getAxisOrientation() != tail.getAxisOrientation()) {
+						switch (direction) {
+						case 270:
+							y += 25; break;
+						case 0:
+							x -= 25; break;
+						case 90:
+							y -= 25; break;
+						case 180:
+							x += 25; break;
+						}
+					}
 				}
+				/*else {
+					if (floating.getHalfPips(Domino.DIRECTION_SOUTH) != 0
+					&&  floating.getHalfPips(Domino.DIRECTION_SOUTH) == tail.getHalfPips(Domino.DIRECTION_NORTH)) {
+						continue;
+					}
+				}*/
 				
 				int dx = x;
 				int dy = y;
@@ -366,13 +424,20 @@ public class Game {
 					dx -= 50; break;
 				}
 				
-				if (occupied[(x - 200) / 25][y / 25] || occupied[(x - 200) / 25 - 1][y / 25] || occupied[(x - 200) / 25][y / 25 - 1] || occupied[(x - 200) / 25 - 1][y / 25 - 1]
-				||  occupied[(dx - 200) / 25][dy / 25] || occupied[(dx - 200) / 25 - 1][dy / 25] || occupied[(dx - 200) / 25][dy / 25 - 1] || occupied[(dx - 200) / 25 - 1][dy / 25 - 1]) {
-					
+				//System.out.println(dy);
+				
+				try {
+					if (occupied[x / 25][y / 25] || occupied[x / 25 - 1][y / 25] || occupied[x / 25][y / 25 - 1] || occupied[x / 25 - 1][y / 25 - 1]
+					||  occupied[dx / 25][dy / 25] || occupied[dx / 25 - 1][dy / 25] || occupied[dx / 25][dy / 25 - 1] || occupied[dx / 25 - 1][dy / 25 - 1]) {
+						
+						continue;
+					}
+				}
+				catch (IndexOutOfBoundsException e) {
 					continue;
 				}
 				
-				new DominoDropZone(x, y, branch, direction);
+				new DominoDropZone(x + playingBoardXBounds[0], y + playingBoardYBounds[0], branch, direction);
 			}
 		}
 		
@@ -400,7 +465,7 @@ public class Game {
 		
 		shuffleDominoes(dominoes);
 		
-		makePlayers(4);
+		makePlayers(playerCount);
 		
 		distributeDominoes(dominoes, players, 7);
 		
@@ -409,6 +474,9 @@ public class Game {
 		ClickArea passButton = new ClickArea(1117, 0, 1200, 50);
 		passButton.setName("pass");
 		g.addClickZone(passButton);
+		
+		topMessage = new CenterAlignedTextLabel("", "Tahoma", Font.PLAIN, 16, Color.WHITE, 600, 43);
+		g.glHUD.addLabel(topMessage);
 		
 		nextTurn();
 		
@@ -447,11 +515,19 @@ public class Game {
 			
 			g.glDropZones.clearRenderList();
 			
+			topMessage.setText("");
+			g.glHUD.repaint();
+			
 			showHand(turn);
 		}
 		
 		else if (zone.getName().equals("pass") && stickyElement == null) {
-			nextTurn();
+			if (true/*playerHasAvailableMoves()*/) {
+				nextTurn();
+			}
+			else {
+				topMessage.setText("You can't pass because you have possible move(s).");
+			}
 		}
 		
 		else if (zone.getName().equals("place-domino")) {
@@ -462,6 +538,8 @@ public class Game {
 
 			ap.hand.remove(stickyElement);
 			
+			Domino dom = (Domino)stickyElement;
+			
 			int x = el.getBoundsCenterX();
 			int y = el.getBoundsCenterY();
 			
@@ -469,7 +547,7 @@ public class Game {
 			stickyElement.centerY(y);
 			stickyElement.setDY(-5);
 			stickyElement.setLayer(g.Z_INDEX_BASE);
-			placedDominoes.add((Domino) stickyElement);
+			placedDominoes.add(dom);
 			g.glDropZones.clearRenderList();
 			
 			occupied[(x - 200) / 25][y / 25] = true;
@@ -491,14 +569,42 @@ public class Game {
 			
 			
 			if (placedDominoes.size() == 1) {
-				((Domino)stickyElement).type = Domino.PERPENDICULAR;
+				dom.type = Domino.PERPENDICULAR;
 				for (LinkedList<Domino> branch : branches) {
-					branch.add((Domino) stickyElement);
+					branch.add(dom);
 				}
+				int pips = dom.getTotalPipCount();
+				
+				if (pips % 5 == 0) {
+					ap.addPoints(pips);
+				}
+				spinner = dom;
 			}
 			else {
-				((DominoDropZone) el).branch.add((Domino) stickyElement);
-				//ap.addPoints(((DominoDropZone) el).branch.getLast().openTilePips);
+				
+				((DominoDropZone) el).branch.add(dom);
+				
+				dom.openTilePips = dom.getHalfPips(el.getRotation());
+				
+				int sumOfExposedEndPips = 0;
+				int startedBranches = 0;
+				for (LinkedList<Domino> branch : branches) {
+					Domino end = branch.getLast();
+					if (branch.size() >= 2) {
+						if (end.type == Domino.PERPENDICULAR) {
+							sumOfExposedEndPips += end.getTotalPipCount();
+						} else {
+							sumOfExposedEndPips += end.openTilePips;
+						}
+						startedBranches++;
+					}
+				}
+				if (startedBranches < 2) {
+					sumOfExposedEndPips += spinner.getTotalPipCount();
+				}
+				if (sumOfExposedEndPips % 5 == 0) {
+					ap.addPoints(sumOfExposedEndPips);
+				}
 			}
 			
 			stickyElement = null;
@@ -508,12 +614,24 @@ public class Game {
 		
 		else if (el instanceof Domino && getActivePlayer().hand.contains(el)) {
 			
+			// removes instructional message when first player clicks on a domino
+			if (topMessage.getText().contains("goes first")) {
+				topMessage.setText("");
+			}
+			
 			//System.out.println("Domino pressed");
 			clearDominoClickables();
 			stickyElement = el;
 			el.setDY(-20);
 			
-			if (placedDominoes.size() == 0) el.rotate(90);
+			if (placedDominoes.size() == 0) {
+				el.rotate(90);
+			}
+			else if (placedDominoes.size() == 1) {
+				if (((Domino)el).type == Domino.PERPENDICULAR) {
+					topMessage.setText("You can't place a double straight off the spinner.");
+				}
+			}
 			
 			// transfers selected domino from hand layer to active layer
 			el.setLayer(StraightDominoesApp.window.viewport.Z_INDEX_ACTIVE);
@@ -528,9 +646,17 @@ public class Game {
 			ClickArea leftSidebar = new ClickArea(0, 0, 210, 800);
 			leftSidebar.setName("hand");
 			g.addClickZone(leftSidebar);
+			
+			g.glHUD.repaint();
 		}
 	}
 	
+	/*private boolean playerHasAvailableMoves() {
+		for (Domino d : getActivePlayer().hand) {
+			
+		}
+	}*/
+
 	public void handleRightClickEvent(GameElement el, ClickArea zone) {}
 	
 	public void handleRightClickEvent() {

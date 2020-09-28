@@ -1,3 +1,4 @@
+
 import java.awt.Dimension;
 import java.awt.Image;
 
@@ -9,9 +10,16 @@ public class Domino extends GameElement {
 	public final static int PERPENDICULAR = 1;
 	public int type = INLINE;
 	
+	public final static int HORIZONTAL_AXIS = 0;
+	public final static int VERTICAL_AXIS = 1;
+	
 	private int[] val = new int[2];
 	
 	public int openTilePips = 0;
+	
+	public int getAxisOrientation() {
+		return getRotation() % 180 == 0 ? HORIZONTAL_AXIS : VERTICAL_AXIS;
+	}
 	
 	public int[] getPips() {
 		return val;
@@ -19,6 +27,10 @@ public class Domino extends GameElement {
 	
 	public int getTotalPipCount() {
 		return val[0] + val[1];
+	}
+	
+	public int getHalfPips(double rot) {
+		return getHalfPips((int)rot);
 	}
 	
 	public int getHalfPips(int rot) {
@@ -62,23 +74,23 @@ public class Domino extends GameElement {
 		
 		setDY(-5);
 		
-		GameElement hl = new GameElement(StraightDominoesApp.storage.get("domino-shading-h.png"), StraightDominoesApp.storage.get("domino-shading-v.png"), new Integer[]{90, 270});
+		GameElement hl = new GameElement(StraightDominoesApp.storage.get("domino-shading-h-3.png"), StraightDominoesApp.storage.get("domino-shading-v-3.png"), new Integer[]{90, 270});
 		hl.setWidth(100);
-		hl.setHeight(100);
+		hl.setHeight(105);
 		hl.setDY(-25);
 		hl.followParentOffset = true;
 		hl.relativeZindex = 1;
 		children.add(hl);
 		hl.parent = this;
 		
-		GameElement depth = new GameElement(StraightDominoesApp.storage.get("domino-3d-h.png"), StraightDominoesApp.storage.get("domino-3d-v.png"), new Integer[]{90, 270});
+		/*GameElement depth = new GameElement(StraightDominoesApp.storage.get("domino-3d-h-2.png"), StraightDominoesApp.storage.get("domino-3d-v.png"), new Integer[]{90, 270});
 		depth.setWidth(100);
 		depth.setHeight(100);
 		depth.setDY(-20);
 		depth.followParentOffset = true;
 		depth.relativeZindex = -1;
 		children.add(depth);
-		depth.parent = this;
+		depth.parent = this;*/
 		
 		GameElement sh = new GameElement(StraightDominoesApp.storage.get("domino-shadow.png"));
 		sh.setWidth(120);

@@ -1,16 +1,17 @@
+
 import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
 
 public class TextLabel {
 	
-	private Font font;
+	protected Font font;
 	
-	private String text;
+	protected String text;
 	
-	private int x, y;
+	protected int x, y;
 	
-	private Color color;
+	protected Color color;
 	
 	// String flags that affect text style when present
 	public ArrayList<String> flags = new ArrayList<String>();

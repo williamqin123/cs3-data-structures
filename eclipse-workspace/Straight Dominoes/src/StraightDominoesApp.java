@@ -35,10 +35,10 @@ public class StraightDominoesApp {
 		"/resources/new-domino-65.png",
 		"/resources/new-domino-66.png",
 		
-		"/resources/domino-shading-h.png",
-		"/resources/domino-3d-h.png",
-		"/resources/domino-shading-v.png",
-		"/resources/domino-3d-v.png",
+		"/resources/domino-shading-h-3.png",
+		//"/resources/domino-3d-h-2.png",
+		"/resources/domino-shading-v-3.png",
+		//"/resources/domino-3d-v-2.png",
 		"/resources/domino-shadow.png",
 		
 		"/resources/blue-rect.png",
@@ -55,6 +55,8 @@ public class StraightDominoesApp {
 		
 		// Enables hardware acceleration
 		//System.setProperty("sun.java2d.opengl", "true");
+		
+		System.setProperty("sun.java2d.accthreshold", "0");
 		
 		storage = new ResourceMan(filesList);
 		

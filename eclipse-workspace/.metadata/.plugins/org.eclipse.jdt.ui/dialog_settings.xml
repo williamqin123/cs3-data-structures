@@ -36,4 +36,24 @@
 	<section name="BuildPathsPropertyPage">
 		<item key="pageIndex" value="2"/>
 	</section>
+	<section name="FatJarPackageWizard">
+		<item key="FatJarPackageWizardPage.ANTSCRIPT_SAVE" value="false"/>
+		<item key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION" value="/Users/williamqin/School/6 Comp Sci 3 Data Structures KAP/Git/eclipse-workspace"/>
+		<item key="FatJarPackageWizardPage.LIBRARY_HANDLING" value="1"/>
+		<item key="FatJarPackageWizardPage.LAUNCH_CONFIGURATION_SELECTION_NAME" value="StraightDominoesApp - Straight Dominoes"/>
+		<item key="FatJarPackageWizardPage.DESTINATION_PATH_SELECTION" value="/Users/williamqin/School/6 Comp Sci 3 Data Structures KAP/Git/JARs/Straight Dominoes v5.jar"/>
+		<list key="FatJarPackageWizardPage.DESTINATION_NAMES_ID">
+			<item value="/Users/williamqin/School/6 Comp Sci 3 Data Structures KAP/Git/JARs/Straight Dominoes v5.jar"/>
+			<item value="/Users/williamqin/School/6 Comp Sci 3 Data Structures KAP/Git/JARs/Straight Dominoes v4.jar"/>
+			<item value="/Users/williamqin/School/6 Comp Sci 3 Data Structures KAP/Git/JARs/Straight Dominoes v3.jar"/>
+			<item value="/Users/williamqin/School/6 Comp Sci 3 Data Structures KAP/Git/JARs/Domino Picture.jar"/>
+			<item value="/Users/williamqin/School/6 Comp Sci 3 Data Structures KAP/Git/JARs/7 Dominoes.jar"/>
+			<item value="/Users/williamqin/School/6 Comp Sci 3 Data Structures KAP/Git/Jars/Domino Picture.jar"/>
+			<item value="/Users/williamqin/School/6 Comp Sci 3 Data Structures KAP/Git/Four Corners.jar"/>
+		</list>
+		<list key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION_HISTORY">
+			<item value="/Users/williamqin/School/6 Comp Sci 3 Data Structures KAP/Git/eclipse-workspace.xml"/>
+			<item value=".xml"/>
+		</list>
+	</section>
 </section>
