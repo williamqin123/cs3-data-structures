@@ -3,9 +3,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class RemoveCards {
 	
@@ -25,14 +27,6 @@ public class RemoveCards {
 				cardsToRemove.add(i);
 			}
 		}
-		
-		Collections.sort(cardsToRemove, new Comparator() {
-			public int compare(StarTrek o1, StarTrek o2) {
-		        if (o1.ordinal() < 3)
-		            return o2.ordinal() < 3 ? o1.ordinal() - o2.ordinal() : 1;
-		        return o2.ordinal() < 3 ? -1 : o1.name().compareTo(o2.name());
-		    }
-		});
 		
 		return cardsToRemove;
     }
@@ -71,14 +65,35 @@ public class RemoveCards {
 	
 	public static int removal(ArrayList<UnoCards> findList, UnoDeck deck) {
 		
+		alphaNumericThenColorSort(findList);
+		
 		ListIterator<UnoCards> iter = deck.getDeck().listIterator();
 		
+		LinkedList<UnoCards> seen = new LinkedList<UnoCards>();
+		int direction = 1;
 		int moves = 0;
 		while (findList.size() > 0) {
-			UnoCards i = iter.next();
-			if (findList.contains(i)) {
+			
+			UnoCards i;
+			
+			if (direction == 1) {
+				i = iter.next();
+			}
+			else {
+				i = iter.previous();
+			}
+			
+			if (i == findList.get(0)) {
 				iter.remove();
 				findList.remove(i);
+				
+				if (seen.contains(i)) seen.remove(i);
+				
+				if (seen.size() > 0 && seen.contains(findList.get(0))) direction = -1;
+				else direction = 1;
+			}
+			else if (findList.contains(i) && !seen.contains(i)) {
+				seen.add(i);
 			}
 			moves++;
 		}
@@ -87,6 +102,22 @@ public class RemoveCards {
 	}
 	
 	//other necessary methods
+	
+	public static void alphaNumericThenColorSort(ArrayList<UnoCards> deck) {
+		Collections.sort(deck, new Comparator<UnoCards>() {
+	        public int compare(UnoCards c1, UnoCards c2) {
+	            String x1 = (c1).getValue();
+	            String x2 = (c2).getValue();
+	            int sComp = x1.compareTo(x2);
+	            if (sComp != 0) {
+	               return sComp;
+	            } 
+	            String f1 = (c1).getColor();
+	            String f2 = (c2).getColor();
+	            return f1.compareTo(f2);
+	    }});
+		//return (ArrayList<UnoCards>) a.stream().sorted((card1, card2) -> card1.getValue().compareTo(card2.getValue())).collect(Collectors.toList());
+	}
 	
 	public static List<String> deckStringToList(String inputDeck) { // converts input String deck to List of cards deck
 		

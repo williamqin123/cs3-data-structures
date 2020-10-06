@@ -6,6 +6,7 @@
 		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
 		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
 		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="C:\Users\slhscs210\Documents\Git\eclipse-workspace\Lab 4 - Line of Dominoes"/>
 			<item value="C:\Users\slhscs210\Documents\Git\eclipse-workspace\Histogram"/>
 			<item value="C:\Users\slhscs210\Documents\Git\eclipse-workspace\Four Corners"/>
 			<item value="/Users/williamqin/School/6 Comp Sci 3 Data Structures KAP/eclipse-workspace/Four Corners"/>
