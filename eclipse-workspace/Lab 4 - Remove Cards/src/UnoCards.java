@@ -20,11 +20,14 @@ public class UnoCards implements Comparable<UnoCards>{
 		return color;
 	}
 	
-	public boolean equals(UnoCards x)
+	@Override
+	public boolean equals(Object x)
 	{
-		return this.compareTo(x)==0;
+		if (!(x instanceof UnoCards)) return false;
+		return this.compareTo((UnoCards)x)==0;
 	}
 	
+	@Override
 	public int compareTo(UnoCards x)
 	{
 		if(color.equals(x.color))
@@ -32,6 +35,7 @@ public class UnoCards implements Comparable<UnoCards>{
 		return color.compareTo(x.color);
 	}
 	
+	@Override
 	public String toString()
 	{
 		return color+" "+value;
