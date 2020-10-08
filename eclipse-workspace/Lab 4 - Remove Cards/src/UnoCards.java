@@ -1,5 +1,5 @@
 
-public class UnoCards implements Comparable<UnoCards>{
+public class UnoCards implements Comparable<UnoCards> {
 	private String value;
 	private String color;
 	private final static String[] colorOrder = {"black", "blue", "green", "red", "yellow"}; 
@@ -28,11 +28,16 @@ public class UnoCards implements Comparable<UnoCards>{
 	}
 	
 	@Override
-	public int compareTo(UnoCards x)
-	{
-		if(color.equals(x.color))
-			return value.compareTo(x.value);
-		return color.compareTo(x.color);
+	public int compareTo(UnoCards card) {
+        String val1 = getValue();
+        String val2 = (card).getValue();
+        int vComp = val1.compareTo(val2);
+        if (vComp != 0) {
+           return vComp;
+        } 
+        String col1 = getColor();
+        String col2 = (card).getColor();
+        return col1.compareTo(col2);
 	}
 	
 	@Override

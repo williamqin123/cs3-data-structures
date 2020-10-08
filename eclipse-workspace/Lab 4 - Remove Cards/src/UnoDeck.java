@@ -60,9 +60,14 @@ public class UnoDeck {
 		return deck;
 	}
 	
-	public void sortDeck()
+	public void sort()
 	{
 		Collections.sort(deck);
+	}
+	
+	public static void sortDeck(ArrayList<UnoCards> cardDeck)
+	{
+		Collections.sort(cardDeck);
 	}
 	
 	public void shuffle()
@@ -84,5 +89,16 @@ public class UnoDeck {
 			temp+=k+" ";
 		temp.trim();
 		return temp;
+	}
+	
+	public static boolean deckContainsSpecificCardInstance(List<UnoCards> a, UnoCards lookFor) {
+		for (UnoCards item : a) {
+			if (item == lookFor) return true;
+		}
+		return false;
+	}
+	
+	public boolean containsSpecificCardInstance(UnoCards lookFor) {
+		return deckContainsSpecificCardInstance(deck, lookFor);
 	}
 }
