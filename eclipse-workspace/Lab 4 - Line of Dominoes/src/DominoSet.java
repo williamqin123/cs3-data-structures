@@ -14,6 +14,10 @@ public class DominoSet {
 		return setOfDominoes;
 	}
 	
+	public int size() {
+		return getList().size();
+	}
+	
 	public DominoSet(List<Domino> dominoList) {
 		setOfDominoes = dominoList;
 	}
@@ -21,11 +25,11 @@ public class DominoSet {
 	public DominoSet(int maxPips) {
 		// avoids using indexes in for loops
 		IntStream.range(0, maxPips + 1).forEachOrdered(p1 -> {
-			IntStream.range(0, p1 + 1).forEachOrdered(p2 -> {
+			IntStream.range(p1, maxPips + 1).forEachOrdered(p2 -> {
 			    Domino d = new Domino(p1, p2);
-			    if (Math.random() >= 0.5) {
+			    /* if (Math.random() >= 0.5) {
 			    	d.rotate();
-			    }
+			    }*/
 			    setOfDominoes.add(d);
 			});
 		});
