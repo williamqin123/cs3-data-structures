@@ -6,6 +6,7 @@
 		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
 		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
 		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="C:\Users\slhscs210\Documents\Git\eclipse-workspace\Lab 5 - Union and Difference"/>
 			<item value="C:\Users\slhscs210\Documents\Git\eclipse-workspace\Lab 4 - Line of Dominoes"/>
 			<item value="C:\Users\slhscs210\Documents\Git\eclipse-workspace\Histogram"/>
 			<item value="C:\Users\slhscs210\Documents\Git\eclipse-workspace\Four Corners"/>
@@ -19,8 +20,8 @@
 		<item key="WizardProjectsImportPage.STORE_CLOSE_CREATED_PROJECTS_ID" value="false"/>
 		<item key="WizardProjectsImportPage.STORE_HIDE_CONFLICTING_PROJECTS_ID" value="false"/>
 		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
-			<item value="/Users/williamqin/School/6 Comp Sci 3 Data Structures KAP/Git/eclipse-workspace"/>
 			<item value="C:\Users\slhscs210\Documents\Git\eclipse-workspace"/>
+			<item value="/Users/williamqin/School/6 Comp Sci 3 Data Structures KAP/Git/eclipse-workspace"/>
 		</list>
 		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
 			<item value=""/>
