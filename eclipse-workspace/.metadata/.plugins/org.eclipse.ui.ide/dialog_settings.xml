@@ -20,8 +20,8 @@
 		<item key="WizardProjectsImportPage.STORE_CLOSE_CREATED_PROJECTS_ID" value="false"/>
 		<item key="WizardProjectsImportPage.STORE_HIDE_CONFLICTING_PROJECTS_ID" value="false"/>
 		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
-			<item value="/Users/williamqin/School/6 Comp Sci 3 Data Structures KAP/Git/eclipse-workspace"/>
 			<item value="C:\Users\slhscs210\Documents\Git\eclipse-workspace"/>
+			<item value="/Users/williamqin/School/6 Comp Sci 3 Data Structures KAP/Git/eclipse-workspace"/>
 		</list>
 		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
 			<item value=""/>

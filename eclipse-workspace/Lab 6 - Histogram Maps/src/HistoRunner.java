@@ -13,5 +13,7 @@ public class HistoRunner
 		out.println("Enter in String:");
 		Histogram test = new Histogram(input.nextLine());
 		out.println(test);
+		
+		input.close();
 	}
 }
