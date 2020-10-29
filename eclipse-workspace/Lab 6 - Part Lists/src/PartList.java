@@ -22,7 +22,9 @@ public class PartList {
 	public String orderSheet(int size) {
 		String returnVal = "";
 		for (Part p : inventory.keySet()) {
-			returnVal += size - inventory.get(p) + " " + p + "\n";
+			if (inventory.get(p) < size) {
+				returnVal += size - inventory.get(p) + " " + p + "\n";
+			}
 		}
 		return returnVal;
 	}

@@ -27,5 +27,7 @@ public class PartsRunner
 		size = input.nextInt();
 		out.println("Order List");
 		out.println(warehouse.orderSheet(size));
+		
+		input.close();
 	}
 }
