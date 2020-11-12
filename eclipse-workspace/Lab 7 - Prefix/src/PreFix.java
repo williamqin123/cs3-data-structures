@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.Stack;
+import static java.lang.System.*;
 
 public class PreFix {
 	
@@ -25,14 +26,14 @@ public class PreFix {
 		else {
 			int stackDepth = 1;
 			Stack<Integer> count = new Stack<Integer>();
-			count.add(0);
+			count.push(0);
 			
 			ex2 = pop(ex2);
 			while (stackDepth > 0) {
 				count.set(count.size() - 1, count.peek() + 1);
 				if (!isNumber(ex2)) {
 					stackDepth++;
-					count.add(0);
+					count.push(0);
 				}
 				ex2 = pop(ex2);
 				while (count.size() > 0 && count.peek() >= 2) {
@@ -64,7 +65,7 @@ public class PreFix {
 		while(sc.hasNextLine()) {
 			
 			String line = sc.nextLine();
-			System.out.println(line + " = " + evaluate(line + " "));
+			out.println(line + " = " + evaluate(line + " "));
 		}
 		sc.close();
 	}
