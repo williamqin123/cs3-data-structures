@@ -1,0 +1,5 @@
+2020/12/14-20:27:04.843 11303 Reusing MANIFEST /Users/williamqin/School/6 Comp Sci 3 Data Structures KAP/Git/Foo/Default/IndexedDB/https_www.youtube.com_0.indexeddb.leveldb/MANIFEST-000001
+2020/12/14-20:27:29.080 34507 Level-0 table #5: started
+2020/12/14-20:27:29.090 34507 Level-0 table #5: 1165 bytes OK
+2020/12/14-20:27:29.101 34507 Delete type=0 #3
+2020/12/14-20:27:29.102 34507 Manual compaction at level-0 from (begin) .. (end); will stop at (end)

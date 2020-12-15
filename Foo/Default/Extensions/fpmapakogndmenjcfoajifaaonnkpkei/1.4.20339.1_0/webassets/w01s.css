@@ -1,0 +1,10 @@
+/*
+COPYRIGHT (C) 2013-2019 PROCTORIO INC.
+USE OF THIS SOFTWARE IS PROTECTED BY COPYRIGHT LAWS AND INTERNATIONAL COPYRIGHT TREATIES,
+AS WELL AS OTHER INTELLECTUAL PROPERTY LAWS AND TREATIES.
+UNAUTHORIZED REPRODUCTION, DISPLAY, MODIFICATION, OR DISTRIBUTION OF THIS SOFTWARE, OR ANY PORTION OF IT,
+MAY RESULT IN SEVERE CIVIL AND CRIMINAL PENALTIES, AND WILL BE PROSECUTED TO THE FULL EXTENT PERMITTED BY LAW.
+USE OF THIS SOFTWARE IS CONDITIONED ON YOUR ACCEPTANCE OF OUR TERMS OF SERVICE, FOUND AT PROCTORIO.COM/TOS.
+OPEN SOURCE LICENSES CAN BE FOUND IN THE LICENSE.TXT FILE OR ONLINE AT PROCTORIO.COM/LICENSES.
+*/
+.websweep_question_comments{display:flex;flex-wrap:wrap}.websweep_question_comment{border:1px solid #b5bfc7;filter:none;border-radius:5px;box-shadow:0 1px 2px rgba(0,0,0,0.2);font-size:16px;font-size:.75rem;min-width:100px;padding:14px;position:relative;margin:16px 30px;text-align:left;display:inline-block}.websweep_question_comment .websweep_question_comment_header{color:#EE0612;line-height:19px;font-variant:small-caps}.websweep_question_comment .question_quote{font-style:italic}.websweep_question_comment .websweep_button_holder{display:flex;justify-content:space-between}.dismiss{opacity:.5;color:grey}

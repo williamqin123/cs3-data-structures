@@ -2,27 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0e936ad2-d627-43d3-8fd9-1695b9c2726e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../Lab 9 - Hash Tables Numbers/Lab 9 - Hash Tables Numbers.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JavaLinkedList.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lab 9 - Linked List Basics.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/JavaLinkedList.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/JavaLinkedListRunner.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/LinkNode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab 9 - Linked Lists Methods/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab 9 - Linked Lists Methods/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab 9 - Linked Lists Methods/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab 9 - Linked Lists Methods/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab 9 - Linked Lists Methods/Lab 9 - Linked Lists Methods.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab 9 - Linked Lists Methods/ListFunHouse.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab 9 - Linked Lists Methods/src/Linkable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab 9 - Linked Lists Methods/src/ListFunHouse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab 9 - Linked Lists Methods/src/ListFunHouseRunner.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab 9 - Linked Lists Methods/src/ListNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Lab 9 - Hash Tables Numbers/src/HashTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Lab 9 - Hash Tables Numbers/src/HashTable.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,53 +47,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="Lab 9 - Linked List Basics" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="WORKING_DIRECTORY" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="Lab 9 - Linked List Basics" />
-      <option name="filePath" />
-      <option name="vmParameters" />
-      <option name="alternativeJrePath" />
-      <option name="programParameters" />
-      <option name="passParentEnvs" value="true" />
-      <option name="workingDirectory" />
-      <option name="isAlternativeJrePathEnabled" value="false" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="WORKING_DIRECTORY" />
-      <option name="filePath" />
-      <option name="vmParameters" />
-      <option name="alternativeJrePath" />
-      <option name="programParameters" />
-      <option name="passParentEnvs" value="true" />
-      <option name="workingDirectory" />
-      <option name="isAlternativeJrePathEnabled" value="false" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="WORKING_DIRECTORY" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.JavaLinkedListRunner" />
@@ -141,5 +74,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

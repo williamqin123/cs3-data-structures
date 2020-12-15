@@ -1,25 +1,41 @@
 import java.util.LinkedList;
+import static java.lang.System.*;
 
 public class HashTable {
 
-    LinkedList<Number>[] buckets;
+    LinkedList<Number>[] buckets = new LinkedList[10];
+
+    public HashTable() {
+        for (int i = 0; i < buckets.length; i++) {
+            buckets[i] = new LinkedList<>();
+        }
+    }
 
     public void add(Number number) {
-        stuff[1].ne
+        LinkedList<Number> bucket = buckets[number.hashCode()];
+        if (bucket.contains(number))
+            return;
+        bucket.add(number);
     }
+
+    /*
+    public Object get(Number key) {
+        What're the keys and values in this table?
+    }
+    */
 
     @Override
     public String toString() {
-        System.out.println("HASHTABLE
-                bucket 0 10
-                bucket 1 21 1 11
-                bucket 2 12 2
-                bucket 3 23 43 3
-                bucket 4 34 54 4
-                bucket 5 45 65 5
-                bucket 6 56 76 6
-                bucket 7 7
-                bucket 8 78 98 8
-                bucket 9 9");
+        String tableDisplay = "";
+        tableDisplay += "HASHTABLE\n";
+        for (int i = 0; i < buckets.length; i++) {
+            LinkedList<Number> bucketList = buckets[i];
+            tableDisplay += "bucket " + i;
+            for (Number n : bucketList) {
+                tableDisplay += " " + n.getValue();
+            }
+            tableDisplay += '\n';
+        }
+        return tableDisplay;
     }
 }

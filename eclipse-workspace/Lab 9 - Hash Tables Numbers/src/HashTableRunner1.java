@@ -10,10 +10,13 @@ public class HashTableRunner1 {
         HashTable ht = new HashTable();
 
         Scanner sc = new Scanner(new File("numbers.dat"));
-        while (sc.hasNextLine()) {
 
+        if (!sc.hasNextLine()) return;
+
+        int numberOfNumbers = Integer.parseInt(sc.nextLine());
+        while (numberOfNumbers > 0) {
             ht.add(new Number(Integer.parseInt(sc.nextLine())));
-
+            numberOfNumbers--;
         }
         sc.close();
 
