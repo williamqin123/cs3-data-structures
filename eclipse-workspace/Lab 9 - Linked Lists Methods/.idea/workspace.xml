@@ -5,27 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6b13c41e-006e-4851-9a34-e0de598120aa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../Lab 9 - Hash Tables Numbers/Lab 9 - Hash Tables Numbers.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab 9 - Linked List Basics/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab 9 - Linked List Basics/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab 9 - Linked List Basics/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab 9 - Linked List Basics/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab 9 - Linked List Basics/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab 9 - Linked List Basics/JavaLinkedList.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab 9 - Linked List Basics/Lab 9 - Linked List Basics.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab 9 - Linked List Basics/src/JavaLinkedList.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab 9 - Linked List Basics/src/JavaLinkedListRunner.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Lab 9 - Linked List Basics/src/LinkNode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lab 9 - Linked Lists Methods.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ListFunHouse.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Linkable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ListFunHouse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ListFunHouseRunner.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ListNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lab 9 - Word Checker/Lab 9 - Word Checker.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lab 9 - Word Checker/WordChecker.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lab 9 - Word Checker/src/DoubleList.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lab 9 - Word Checker/src/DoubleNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Lab 9 - Word Checker/src/WordChecker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Lab 9 - Linked List Basics/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Lab 9 - Linked List Basics/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,6 +83,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

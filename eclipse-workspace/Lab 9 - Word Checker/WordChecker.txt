@@ -1,0 +1,7 @@
+3
+A A A A B V S E A S A A
+24
+A B C
+-29
+A B C A B C A B C A B C A B C
+1

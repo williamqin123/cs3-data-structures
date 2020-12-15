@@ -1,0 +1,14 @@
+/*
+COPYRIGHT (C) 2013-2020 PROCTORIO INC.
+USE OF THIS SOFTWARE IS PROTECTED BY COPYRIGHT LAWS AND INTERNATIONAL COPYRIGHT TREATIES,
+AS WELL AS OTHER INTELLECTUAL PROPERTY LAWS AND TREATIES.
+UNAUTHORIZED REPRODUCTION, DISPLAY, MODIFICATION, OR DISTRIBUTION OF THIS SOFTWARE, OR ANY PORTION OF IT,
+MAY RESULT IN SEVERE CIVIL AND CRIMINAL PENALTIES, AND WILL BE PROSECUTED TO THE FULL EXTENT PERMITTED BY LAW.
+USE OF THIS SOFTWARE IS CONDITIONED ON YOUR ACCEPTANCE OF OUR TERMS OF SERVICE, FOUND AT PROCTORIO.COM/TOS.
+OPEN SOURCE LICENSES CAN BE FOUND IN THE LICENSE.TXT FILE OR ONLINE AT PROCTORIO.COM/LICENSES.
+*/
+function fbced5(n,u){this.createExamDownloadImages=function(b,v,a,h,d,k){var r=a[0][2]?!d.ferpa.hide_id:!1,t=a[0][3]?!d.ferpa.hide_video:!1,f=0,w=n.lms||"",p=new JSZip,l=!1,m=!1,c=0;b.length>k&&(l=k,m=Math.ceil(b.length/l));var g=b.length/10;h(g);if(r||t){var q=function(){var b=u[0].split("(")[0];p.generateAsync({type:"blob"}).then(function(a){l&&c++;0<c?(h(-1,c,m),saveAs(a,b+" Part "+c+" of "+m+" - Proctorio Exam Export.zip")):saveAs(a,b+" - Proctorio Exam Export.zip")})};for(a={$jscomp$loop$prop$index$1:0};a.$jscomp$loop$prop$index$1<
+b.length;a={$jscomp$loop$prop$index$1:a.$jscomp$loop$prop$index$1,$jscomp$loop$prop$CDN$2:a.$jscomp$loop$prop$CDN$2},a.$jscomp$loop$prop$index$1++){d=function(a){return function(d){if(d){var c=extract_encryption_data(b[a.$jscomp$loop$prop$index$1][1][0][9]);chrome.runtime.sendMessage([3002,v,cjs.mi6(b[a.$jscomp$loop$prop$index$1][6]).toString(),c.mode,c.explicitKey,!0],function(c){n.get_encrypted_img(a.$jscomp$loop$prop$CDN$2[0],x+"/"+d,c,w,function(c){if(c&&0!=c&&1!=c){var e=document.createElement("canvas");
+e.style.display="none";e.width=240;e.height=160;var d=e.getContext("2d");d.drawImage(c,0,0,e.width,e.height);c=document.createElement("img");c.src=e.toDataURL("image/jpeg");var l=u[3]+" "+(new Date).toLocaleString();n.drawWatermarkImage(l,d,e,c);e=e.toDataURL("image/jpeg");d=(b[a.$jscomp$loop$prop$index$1][5][0]+"_"+b[a.$jscomp$loop$prop$index$1][5][1]+"_attempt_"+b[a.$jscomp$loop$prop$index$1][8]).split(" ").join("_");c=(b[a.$jscomp$loop$prop$index$1][5][0]+"_"+b[a.$jscomp$loop$prop$index$1][5][1]+
+"_"+Date.now()+".jpeg").split(" ").join("_");p.file(d+"/"+c,e.split(",")[1],{base64:!0});f++;r&&t?(f/2>Math.floor(g)&&0==f/2%Math.floor(g)&&h(g),f/2===b.length?(q(),h(-1,1,m)):b.length>k&&0===f/2%k&&(q(),p=new JSZip)):(f>Math.floor(g)&&0==f%Math.floor(g)&&h(g),f===b.length?(q(),h(-1,1,m)):0===f%k&&(q(),p=new JSZip))}})})}}}(a);a.$jscomp$loop$prop$CDN$2=n.parseCDN(b[a.$jscomp$loop$prop$index$1][1][0][4]);var x=b[a.$jscomp$loop$prop$index$1][1][0][5],y=t?b[a.$jscomp$loop$prop$index$1][1][0][7][1]:null;
+d(r?b[a.$jscomp$loop$prop$index$1][1][0][6][1]:null);d(y)}}}}window.frameElement&&-1<window.frameElement.attributes.class.value.indexOf("classic-learn-iframe")?window.dispatchEvent(new CustomEvent("fbced5")):window.top.dispatchEvent(new CustomEvent("fbced5"));

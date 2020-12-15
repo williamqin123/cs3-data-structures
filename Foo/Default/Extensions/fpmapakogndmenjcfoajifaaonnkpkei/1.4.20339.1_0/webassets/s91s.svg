@@ -1,0 +1,10 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="80px" height="46px" viewBox="0 0 80 46" style="enable-background:new 0 0 80 46;" xml:space="preserve">						 
+	<path class="dark" d="M6,6v34h61V6H6z M0,0h74v14h6v18h-6v14H0V0z" />						
+	<rect class="lightest battery_cell" x="7" y="8" width="8" height="30" />						
+	<rect class="lightest battery_cell" x="17" y="8" width="8" height="30" />						
+	<rect class="lightest battery_cell" x="27" y="8" width="8" height="30" />						
+	<rect class="lightest battery_cell" x="37" y="8" width="8" height="30" />						
+	<rect class="lightest battery_cell" x="47" y="8" width="8" height="30" />						
+	<rect class="lightest battery_cell" x="57" y="8" width="8" height="30" />
+	<path class="medium lightning_bolt" d="M61 25.516L31.75 12v9.484H11L40.25 35v-9.484H61z" />
+</svg>

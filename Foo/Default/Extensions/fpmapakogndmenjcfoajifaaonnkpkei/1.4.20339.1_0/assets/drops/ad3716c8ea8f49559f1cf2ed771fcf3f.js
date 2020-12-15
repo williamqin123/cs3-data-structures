@@ -1,0 +1,16 @@
+/*
+COPYRIGHT (C) 2013-2020 PROCTORIO INC.
+USE OF THIS SOFTWARE IS PROTECTED BY COPYRIGHT LAWS AND INTERNATIONAL COPYRIGHT TREATIES,
+AS WELL AS OTHER INTELLECTUAL PROPERTY LAWS AND TREATIES.
+UNAUTHORIZED REPRODUCTION, DISPLAY, MODIFICATION, OR DISTRIBUTION OF THIS SOFTWARE, OR ANY PORTION OF IT,
+MAY RESULT IN SEVERE CIVIL AND CRIMINAL PENALTIES, AND WILL BE PROSECUTED TO THE FULL EXTENT PERMITTED BY LAW.
+USE OF THIS SOFTWARE IS CONDITIONED ON YOUR ACCEPTANCE OF OUR TERMS OF SERVICE, FOUND AT PROCTORIO.COM/TOS.
+OPEN SOURCE LICENSES CAN BE FOUND IN THE LICENSE.TXT FILE OR ONLINE AT PROCTORIO.COM/LICENSES.
+*/
+var $jscomp=$jscomp||{};$jscomp.scope={};$jscomp.checkStringArgs=function(a,d,b){if(null==a)throw new TypeError("The 'this' value for String.prototype."+b+" must not be null or undefined");if(d instanceof RegExp)throw new TypeError("First argument to String.prototype."+b+" must not be a regular expression");return a+""};$jscomp.ASSUME_ES5=!1;$jscomp.ASSUME_NO_NATIVE_MAP=!1;$jscomp.ASSUME_NO_NATIVE_SET=!1;$jscomp.SIMPLE_FROUND_POLYFILL=!1;
+$jscomp.defineProperty=$jscomp.ASSUME_ES5||"function"==typeof Object.defineProperties?Object.defineProperty:function(a,d,b){a!=Array.prototype&&a!=Object.prototype&&(a[d]=b.value)};$jscomp.getGlobal=function(a){return"undefined"!=typeof window&&window===a?a:"undefined"!=typeof global&&null!=global?global:a};$jscomp.global=$jscomp.getGlobal(this);
+$jscomp.polyfill=function(a,d,b,e){if(d){b=$jscomp.global;a=a.split(".");for(e=0;e<a.length-1;e++){var f=a[e];f in b||(b[f]={});b=b[f]}a=a[a.length-1];e=b[a];d=d(e);d!=e&&null!=d&&$jscomp.defineProperty(b,a,{configurable:!0,writable:!0,value:d})}};
+$jscomp.polyfill("String.prototype.startsWith",function(a){return a?a:function(a,b){var e=$jscomp.checkStringArgs(this,a,"startsWith");a+="";var d=e.length,c=a.length;b=Math.max(0,Math.min(b|0,e.length));for(var h=0;h<c&&b<d;)if(e[b++]!=a[h++])return!1;return h>=c}},"es6","es3");
+(function(){if(!document.body.getAttribute("data-p")){document.body.setAttribute("data-p",1);var a="",d="",b=window.location.hash.substring(1),e=new ec21dc(function(){document.body.dispatchEvent(new CustomEvent("2fd3c9"));chrome.runtime.sendMessage([11],function(c){chrome.runtime.lastError&&location.reload();a=c[0];d=c[1];chrome.runtime.sendMessage([147],function(c){if(c.length){var g=document.getElementById("proctorio_3p_preparing_test");g&&(g.style.display="none");if(""!=c[6]&&b!=c[6]){if(g=document.getElementById("proctorio_3p_invalid_test"))g.style.display=
+"block"}else e.ee1(a,function(g){account_type=g;chrome.runtime.sendMessage([91]);e.b8d(c[0],$("#proctorio_3p_container")[0],b,a,d,"3p",c[5]?c[5]:"The Test Taker","","",window.location.hash?window.location.hash.substring(1):"Proctored Exam","body",f,!1,account_type,c);chrome.runtime.sendMessage([19,!0]);chrome.runtime.sendMessage([4,chrome.i18n.getMessage("B410")])})}})})}),f=setInterval(function(){try{chrome.runtime.sendMessage([42,"lub"],function(a){chrome.runtime.lastError?(clearInterval(f),location.reload()):
+"dub"!=a&&(clearInterval(f),location.reload())})}catch(c){if(c.message.startsWith("Cannot read")||c.message.startsWith("Error connecting to extension")||c.message.startsWith("Invocation of form runtime.connect")||c.message.startsWith("Extension context invalidated"))clearInterval(f),location.reload()}},1E3)}})();

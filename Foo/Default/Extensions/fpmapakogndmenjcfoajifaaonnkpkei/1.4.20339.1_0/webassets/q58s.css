@@ -1,0 +1,10 @@
+/*
+COPYRIGHT (C) 2013-2019 PROCTORIO INC.
+USE OF THIS SOFTWARE IS PROTECTED BY COPYRIGHT LAWS AND INTERNATIONAL COPYRIGHT TREATIES,
+AS WELL AS OTHER INTELLECTUAL PROPERTY LAWS AND TREATIES.
+UNAUTHORIZED REPRODUCTION, DISPLAY, MODIFICATION, OR DISTRIBUTION OF THIS SOFTWARE, OR ANY PORTION OF IT,
+MAY RESULT IN SEVERE CIVIL AND CRIMINAL PENALTIES, AND WILL BE PROSECUTED TO THE FULL EXTENT PERMITTED BY LAW.
+USE OF THIS SOFTWARE IS CONDITIONED ON YOUR ACCEPTANCE OF OUR TERMS OF SERVICE, FOUND AT PROCTORIO.COM/TOS.
+OPEN SOURCE LICENSES CAN BE FOUND IN THE LICENSE.TXT FILE OR ONLINE AT PROCTORIO.COM/LICENSES.
+*/
+#proctorio_preview{width:825px;margin:40px 0;font-size:18px;color:#222;font-family:'Open Sans'}.moodle-dialogue-base #proctorio_preview{margin:40px auto;width:550px}#proctorio_alert_svg{height:100px;width:100px;margin:0 25px 0 0;float:left}#proctorio_alert_svg svg{fill:#666;height:100%;width:100%}#proctorio_alert_text{float:left;width:700px}.moodle-dialogue-base #proctorio_alert_text{width:425px}#proctorio_preview.cfx:before,#proctorio_preview.cfx:after{content:" ";display:table}#proctorio_preview.cfx:after{clear:both}

@@ -1,0 +1,10 @@
+/*
+COPYRIGHT (C) 2013-2019 PROCTORIO INC.
+USE OF THIS SOFTWARE IS PROTECTED BY COPYRIGHT LAWS AND INTERNATIONAL COPYRIGHT TREATIES,
+AS WELL AS OTHER INTELLECTUAL PROPERTY LAWS AND TREATIES.
+UNAUTHORIZED REPRODUCTION, DISPLAY, MODIFICATION, OR DISTRIBUTION OF THIS SOFTWARE, OR ANY PORTION OF IT,
+MAY RESULT IN SEVERE CIVIL AND CRIMINAL PENALTIES, AND WILL BE PROSECUTED TO THE FULL EXTENT PERMITTED BY LAW.
+USE OF THIS SOFTWARE IS CONDITIONED ON YOUR ACCEPTANCE OF OUR TERMS OF SERVICE, FOUND AT PROCTORIO.COM/TOS.
+OPEN SOURCE LICENSES CAN BE FOUND IN THE LICENSE.TXT FILE OR ONLINE AT PROCTORIO.COM/LICENSES.
+*/
+body .precheck_holder{position:relative;overflow-x:auto}body .precheck_holder div.proctorio_tool_tip{position:absolute;padding:10px;text-align:left;border-radius:3px;z-index:20;background:#f7f7f7;color:#666;border:1px solid #ccc;width:250px}body .precheck_holder div.proctorio_tool_tip:after{content:'';position:absolute;left:125px;bottom:-9px;width:15px;height:15px;-webkit-transform:rotate(45deg);-moz-transform:rotate(45deg);-o-transform:rotate(45deg);-ms-transform:rotate(45deg);transform:rotate(45deg);background-color:#f7f7f7;border-style:solid;border-color:#ccc;border-top-width:0;border-right-width:1px;border-bottom-width:1px;border-left-width:0}body div.proctorio_tool_tip p{margin:0}body div.proctorio_tool_tip p.tool_tip_title{font-size:16px;line-height:24px;margin-bottom:10px}body div.proctorio_tool_tip p.tool_tip_percent{font-size:14px;line-height:20px}
