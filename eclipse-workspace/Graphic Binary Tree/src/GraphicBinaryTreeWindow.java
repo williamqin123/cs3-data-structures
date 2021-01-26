@@ -3,6 +3,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Point2D;
 
 public class GraphicBinaryTreeWindow extends JFrame {
 
@@ -43,6 +44,7 @@ class UserInputPanel extends JPanel implements ActionListener {
     public UserInputPanel() {
         numberField = new JTextField(10);
         addNodeButton = new JButton("Add Node");
+        addNodeButton.addActionListener(this);
 
         add(numberField);
         add(addNodeButton);
@@ -60,8 +62,8 @@ class UserInputPanel extends JPanel implements ActionListener {
 
 class GraphicBinaryTreeVisualizer extends JPanel {
 
-    final int width = 1200;
-    final int height = 600;
+    final int width = 1200, height = 600;
+    final int nodeWidth = 20, nodeHeight = 16, levelGap = 8, textSize = 12;
 
     TreeNode tree;
 
@@ -69,17 +71,41 @@ class GraphicBinaryTreeVisualizer extends JPanel {
         setPreferredSize(new Dimension(width, height));
     }
 
-    public void drawTree(TreeNode tree) {
+    public void update(TreeNode tree) {
         this.tree = tree;
         repaint();
     }
 
     @Override
-    public void paint(Graphics g) {
-        super.paint(g);
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        if (tree == null) return;
 
         Graphics2D g2d = (Graphics2D) g;
 
+        drawTree(tree, new Point(0, 1), g2d);
+    }
 
+    private void drawTree(TreeNode node, Point loc, Graphics2D g2d) {
+
+        System.out.println(node.val());
+
+        int x = loc.x * nodeWidth, y = loc.y * nodeHeight;
+
+        g2d.drawString(Double.toString(node.val()), x, y);
+
+        TreeNode lChild = node.left(), rChild = node.right();
+
+        if (lChild != null) {
+            Point shiftedLoc = new Point(loc.x, loc.y + 1);
+            g2d.drawLine(x, y, shiftedLoc.x * nodeWidth, y + levelGap);
+            drawTree(lChild, shiftedLoc, g2d);
+        }
+        if (rChild != null) {
+            Point shiftedLoc = new Point(loc.x + (int)Math.pow(2, node.getDepth()), loc.y + 1);
+            g2d.drawLine(x + nodeWidth, y, shiftedLoc.x * nodeWidth, y + levelGap);
+            drawTree(rChild, shiftedLoc, g2d);
+        }
     }
 }

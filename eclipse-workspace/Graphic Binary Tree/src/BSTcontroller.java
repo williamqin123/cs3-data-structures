@@ -1,5 +1,3 @@
-import com.sun.source.tree.Tree;
-
 public class BSTcontroller {
 
     private TreeNode treeRoot;
@@ -26,7 +24,7 @@ public class BSTcontroller {
         TreeNode n = treeRoot;
 
         while (true) {
-            if (newNode.val <= n.val) {
+            if (newNode.val() <= n.val()) {
                 TreeNode l = n.left();
                 if (l == null) {
                     n.left(newNode);
@@ -43,7 +41,7 @@ public class BSTcontroller {
             n = r;
         }
 
-        view.drawTree(treeRoot);
+        view.update(treeRoot);
     }
 }
 
@@ -69,8 +67,8 @@ class TreeNode {
         return right;
     }
 
-    final double val;
-    TreeNode left, right;
+    private final double val;
+    private TreeNode left, right;
 
     public TreeNode(double val) {
         this.val = val;
@@ -81,8 +79,8 @@ class TreeNode {
         TreeNode n = this;
         while (n != null) {
             ++depth;
-            TreeNode leftChild = this.left();
-            n = (leftChild == null) ? this.right() : leftChild;
+            TreeNode leftChild = n.left();
+            n = (leftChild == null) ? n.right() : leftChild;
         }
         return depth;
     }
