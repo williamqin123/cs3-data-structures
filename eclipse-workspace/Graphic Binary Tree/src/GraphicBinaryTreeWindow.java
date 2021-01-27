@@ -63,7 +63,8 @@ class UserInputPanel extends JPanel implements ActionListener {
 class GraphicBinaryTreeVisualizer extends JPanel {
 
     final int width = 1200, height = 600;
-    final int nodeWidth = 20, nodeHeight = 16, levelGap = 8, textSize = 12;
+    final int canvasPadding = 20, nodeWidth = 50, nodeHeight = 24, horizontalGap = 10, levelGap = 15, textSize = 16;
+    final Point nodePadding = new Point(2, (nodeHeight - textSize) / 2);
 
     TreeNode tree;
 
@@ -84,28 +85,45 @@ class GraphicBinaryTreeVisualizer extends JPanel {
 
         Graphics2D g2d = (Graphics2D) g;
 
-        drawTree(tree, new Point(0, 1), g2d);
+        g2d.translate(canvasPadding, canvasPadding);
+        g2d.setFont(new Font("Arial", Font.PLAIN, textSize));
+
+        drawTree(tree, new Point(0, 1), 0, g2d);
     }
 
-    private void drawTree(TreeNode node, Point loc, Graphics2D g2d) {
+    private int drawTree(TreeNode node, Point loc, int maxOffset, Graphics2D g2d) {
 
-        System.out.println(node.val());
+        final int nodeWidthAndMargin = nodeWidth + horizontalGap;
 
-        int x = loc.x * nodeWidth, y = loc.y * nodeHeight;
+        int x = loc.x * nodeWidthAndMargin, y = loc.y * (nodeHeight + levelGap);
 
-        g2d.drawString(Double.toString(node.val()), x, y);
+        g2d.drawString(GraphicBinaryTreeRunner.fmt(node.val()), x + nodePadding.x, y - nodePadding.y);
+
+        g2d.drawRect(x, y - nodeHeight, nodeWidth, nodeHeight);
+
+        final int halfNodeWidth = nodeWidth / 2;
+
+        x += halfNodeWidth;
 
         TreeNode lChild = node.left(), rChild = node.right();
 
+        int leftSubTreeHeight = 0;
+
+        int offset = 0;
+
         if (lChild != null) {
             Point shiftedLoc = new Point(loc.x, loc.y + 1);
-            g2d.drawLine(x, y, shiftedLoc.x * nodeWidth, y + levelGap);
-            drawTree(lChild, shiftedLoc, g2d);
+            g2d.drawLine(x, y, shiftedLoc.x * nodeWidthAndMargin + halfNodeWidth, y + levelGap);
+            offset = drawTree(lChild, shiftedLoc, maxOffset, g2d);
+
+            leftSubTreeHeight = lChild.height();
         }
         if (rChild != null) {
-            Point shiftedLoc = new Point(loc.x + (int)Math.pow(2, node.getDepth()), loc.y + 1);
-            g2d.drawLine(x + nodeWidth, y, shiftedLoc.x * nodeWidth, y + levelGap);
-            drawTree(rChild, shiftedLoc, g2d);
+            Point shiftedLoc = new Point(loc.x + rChild.netRight(leftSubTreeHeight, 0, rChild.height()), loc.y + 1);
+            g2d.drawLine(x, y, shiftedLoc.x * nodeWidthAndMargin + halfNodeWidth, y + levelGap);
+            offset = drawTree(rChild, shiftedLoc, maxOffset, g2d) + 1;
         }
+
+        return offset;
     }
 }
