@@ -119,7 +119,9 @@ class GraphicBinaryTreeVisualizer extends JPanel {
             leftSubTreeHeight = lChild.height();
         }
         if (rChild != null) {
-            Point shiftedLoc = new Point(loc.x + rChild.netRight(leftSubTreeHeight, 0, rChild.height()), loc.y + 1);
+            int rightwardShift = 1 + (lChild == null ? 0 : lChild.netRight(0, 0, rChild.height()));
+
+            Point shiftedLoc = new Point(loc.x + rightwardShift, loc.y + 1);
             g2d.drawLine(x, y, shiftedLoc.x * nodeWidthAndMargin + halfNodeWidth, y + levelGap);
             offset = drawTree(rChild, shiftedLoc, maxOffset, g2d) + 1;
         }

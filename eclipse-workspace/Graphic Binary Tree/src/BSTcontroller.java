@@ -1,5 +1,7 @@
 import com.sun.source.tree.Tree;
 
+import java.sql.SQLOutput;
+
 public class BSTcontroller {
 
     private TreeNode treeRoot;
@@ -137,11 +139,14 @@ class TreeNode {
         if (depth >= maxDepth) return x;
 
         TreeNode r = right(), l = left();
-        int xPos = x;
+        int biggestX = x;
         if (r != null)
             x = Math.max(x, r.netRight(x + 1, depth + 1, maxDepth));
         if (l != null)
             x = Math.max(x, l.netRight(x, depth + 1, maxDepth));
-        return xPos;
+
+        System.out.println(this.val());
+
+        return biggestX;
     }
 }
