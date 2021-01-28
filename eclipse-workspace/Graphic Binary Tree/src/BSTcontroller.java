@@ -136,7 +136,7 @@ class TreeNode {
 
     public int netRight(int x, int depth, int maxDepth) {
 
-        if (depth >= maxDepth) return x;
+        //if (depth > maxDepth) return x;
 
         TreeNode r = right(), l = left();
         int biggestX = x;
@@ -145,7 +145,7 @@ class TreeNode {
         if (l != null)
             x = Math.max(x, l.netRight(x, depth + 1, maxDepth));
 
-        System.out.println(this.val());
+        System.out.println(x);
 
         return biggestX;
     }
