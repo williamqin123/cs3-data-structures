@@ -30,7 +30,8 @@ public class GraphicBinaryTreeWindow extends JFrame {
 
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
-        infoPanel.add(getCenterAlignedJLabel("Type a decimal number in the box below and click \"add\" to insert it as a tree node."));
+        infoPanel.add(getCenterAlignedJLabel("Type a decimal number in the box below and click the button to insert it as a tree node."));
+        infoPanel.add(getCenterAlignedJLabel("You can also type a comma-separated series of numbers to add them to the tree, in the order that you typed them in, all in one go."));
         infoPanel.add(getCenterAlignedJLabel("Leave the box blank to insert a random number from 0 to 999."));
 
         add(infoPanel);
@@ -55,8 +56,8 @@ class UserInputPanel extends JPanel implements ActionListener {
     }
 
     public UserInputPanel() {
-        numberField = new JTextField(10);
-        addNodeButton = new JButton("Add Node");
+        numberField = new JTextField(25);
+        addNodeButton = new JButton("Add Node(s)");
         addNodeButton.addActionListener(this);
 
         add(numberField);
@@ -68,14 +69,23 @@ class UserInputPanel extends JPanel implements ActionListener {
 
         if (e.getSource() == addNodeButton) {
 
+            final String COMMA = ",";
+
             String text = numberField.getText();
 
             if (text.equals("")) {
                 controller.addNode(Math.floor(Math.random() * 1000));
                 return;
             }
-
-            controller.addNode(Double.parseDouble(text));
+            else if (text.contains(COMMA)) {
+                String[] numbers = text.split(COMMA);
+                for (String num : numbers) {
+                    controller.addNode(Double.parseDouble(num));
+                }
+            }
+            else {
+                controller.addNode(Double.parseDouble(text));
+            }
             numberField.setText(null);
         }
     }
