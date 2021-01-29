@@ -16,46 +16,34 @@ public class BSTcontroller {
         controls.setController(this);
     }
 
-    private TreeNode[][] grid;
-
-    public TreeNode[][] grid(TreeNode root) {
-        int h = root.height();
-        grid = new TreeNode[h + 1][(int)Math.pow(2, h)];
-        putInGrid(root, 0, 0);
-        return grid;
-    }
-
-    private void putInGrid(TreeNode n, int row, int col) {
-
-    }
-
     public void addNode(double num) {
 
         TreeNode newNode = new TreeNode(num);
 
         if (treeRoot == null) {
             treeRoot = newNode;
-            return;
         }
+        else {
 
-        TreeNode n = treeRoot;
+            TreeNode n = treeRoot;
 
-        while (true) {
-            if (newNode.val() <= n.val()) {
-                TreeNode l = n.left();
-                if (l == null) {
-                    n.left(newNode);
+            while (true) {
+                if (newNode.val() <= n.val()) {
+                    TreeNode l = n.left();
+                    if (l == null) {
+                        n.left(newNode);
+                        break;
+                    }
+                    n = l;
+                    continue;
+                }
+                TreeNode r = n.right();
+                if (r == null) {
+                    n.right(newNode);
                     break;
                 }
-                n = l;
-                continue;
+                n = r;
             }
-            TreeNode r = n.right();
-            if (r == null) {
-                n.right(newNode);
-                break;
-            }
-            n = r;
         }
 
         view.update(treeRoot);
@@ -134,19 +122,48 @@ class TreeNode {
         return 0;
     }
 
-    public int netRight(int x, int depth, int maxDepth) {
+    public int visualWidthInDirection(int leftOrRight, int x, int depth, int maxDepth) {
 
-        //if (depth > maxDepth) return x;
+        if (depth > maxDepth) return x;
 
         TreeNode r = right(), l = left();
         int biggestX = x;
         if (r != null)
-            x = Math.max(x, r.netRight(x + 1, depth + 1, maxDepth));
+            biggestX = Math.max(biggestX, r.visualWidthInDirection(leftOrRight, x + leftOrRight * 2 - 1, depth + 1, maxDepth));
         if (l != null)
-            x = Math.max(x, l.netRight(x, depth + 1, maxDepth));
+            biggestX = Math.max(biggestX, l.visualWidthInDirection(leftOrRight, x + (leftOrRight + 1) % 2 * 2 - 1, depth + 1, maxDepth));
 
-        System.out.println(x);
+        System.out.println(biggestX);
 
         return biggestX;
     }
+
+    public int[] graphicBreadth(int maxDepth) {
+        return graphicBreadth(0, maxDepth);
+    }
+
+    public int[] graphicBreadth(int depth, int maxDepth) {
+
+        int[] maxBreadth = {0, 0};
+
+        int[] breadth;
+
+        if (depth <= maxDepth || true) {
+
+            TreeNode r = right(), l = left();
+
+            if (r != null) {
+                breadth = r.graphicBreadth(depth + 1, maxDepth);
+                maxBreadth[1] = breadth[0] + breadth[1] + 1;
+            }
+
+            if (l != null) {
+                breadth = l.graphicBreadth(depth + 1, maxDepth);
+                maxBreadth[0] = breadth[0] + breadth[1] + 1;
+            }
+        }
+
+        return maxBreadth;
+    }
+
 }
