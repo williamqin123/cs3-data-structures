@@ -74,7 +74,16 @@ class UserInputPanel extends JPanel implements ActionListener {
             String text = numberField.getText();
 
             if (text.equals("")) {
-                controller.addNode(Math.floor(Math.random() * 1000));
+                final double[] j = {1};
+                (new Timer(33, new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        j[0] *= 1.01;
+                        for (int i = 0; i < j[0]; ++i) {
+                            controller.addNode(Math.floor(Math.random() * 1000) + Math.random());
+                        }
+                    }
+                })).start();
                 return;
             }
             else if (text.contains(COMMA)) {
@@ -97,7 +106,7 @@ class GraphicBinaryTreeVisualizer extends JPanel {
 
     final int width = Math.min(1024, screenSize.width), height = Math.min(600, screenSize.height);
     int xCenter;
-    final int canvasPadding = 10, nodeWidth = 40, nodeHeight = 20, horizontalGap = 5, levelGap = 14, textSize = 14;
+    final int canvasPadding = 1, nodeWidth = 1, nodeHeight = 1, horizontalGap = 1, levelGap = 1, textSize = 0;
     final Point nodePadding = new Point(2, (nodeHeight - textSize) / 2);
     final int halfNodeWidth = nodeWidth / 2, halfNodeHeight = nodeHeight / 2;
 
@@ -121,6 +130,15 @@ class GraphicBinaryTreeVisualizer extends JPanel {
         xCenter = getWidth() / 2;
 
         Graphics2D g2d = (Graphics2D) g;
+
+        g2d.setRenderingHint(
+                RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        g2d.setRenderingHint(
+            RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
+        g2d.setRenderingHint(
+                RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+        g2d.setRenderingHint(
+                RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         g2d.setFont(new Font("Arial", Font.PLAIN, textSize));
 
