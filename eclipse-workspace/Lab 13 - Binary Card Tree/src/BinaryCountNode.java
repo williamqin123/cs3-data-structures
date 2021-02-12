@@ -10,7 +10,7 @@ public class BinaryCountNode {
     public void incrementDupeCount() {
         ++dupeCount;
     }
-    public boolean decrementDupeCount() { // returns if the node should be removed
+    public boolean decrementDupeCount() { // returns whether the node should be removed
         return --dupeCount <= 0;
     }
 }
