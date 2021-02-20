@@ -1,15 +1,14 @@
-import com.sun.source.tree.Tree;
-
-import java.sql.SQLOutput;
-
 public class BSTcontroller {
+
+    private AVLTree avl = new AVLTree();
+    private Node avlNode;
 
     private TreeNode treeRoot;
 
     private UserInputPanel controls;
-    private GraphicBinaryTreeVisualizer view;
+    private GraphicAVLTreeVisualizer view;
 
-    public BSTcontroller(UserInputPanel controls, GraphicBinaryTreeVisualizer view) {
+    public BSTcontroller(UserInputPanel controls, GraphicAVLTreeVisualizer view) {
         this.controls = controls;
         this.view = view;
 
@@ -17,6 +16,16 @@ public class BSTcontroller {
     }
 
     public void addNode(double num) {
+
+        avl.root = avl.insert(avl.root, num);
+
+        view.update(avl);
+
+        //return;
+
+        //////////
+
+        /*
 
         TreeNode newNode = new TreeNode(num);
 
@@ -47,6 +56,8 @@ public class BSTcontroller {
         }
 
         view.update(treeRoot);
+
+        */
     }
 }
 
@@ -166,4 +177,22 @@ class TreeNode {
         return maxBreadth;
     }
 
+}
+
+//////////
+
+class AVLNode extends TreeNode {
+
+    public AVLNode (double x) {
+        super(x);
+    }
+
+    public int balanceFactor(){
+        return getHeight(left())-getHeight(right());
+    }
+
+    private int getHeight(TreeNode k) {
+        if (k == null) return -1;
+        return 1 + Math.max(getHeight(k.left()), getHeight(k.right()));
+    }
 }

@@ -4,11 +4,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
 
-public class GraphicBinaryTreeWindow extends JFrame {
+public class GraphicAVLTreeWindow extends JFrame {
 
-    final String title = "Graphic Binary Tree";
+    final String title = "Graphic AVL Tree";
 
     private static JLabel getCenterAlignedJLabel(String text) {
         JLabel l = new JLabel(text, JLabel.CENTER);
@@ -16,7 +15,7 @@ public class GraphicBinaryTreeWindow extends JFrame {
         return l;
     }
 
-    public GraphicBinaryTreeWindow() {
+    public GraphicAVLTreeWindow() {
         super();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -24,9 +23,9 @@ public class GraphicBinaryTreeWindow extends JFrame {
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         UserInputPanel userInputPanel = new UserInputPanel();
-        GraphicBinaryTreeVisualizer graphicBinaryTreeVisualizer = new GraphicBinaryTreeVisualizer();
+        GraphicAVLTreeVisualizer graphicAVLTreeVisualizer = new GraphicAVLTreeVisualizer();
 
-        BSTcontroller controller = new BSTcontroller(userInputPanel, graphicBinaryTreeVisualizer);
+        BSTcontroller controller = new BSTcontroller(userInputPanel, graphicAVLTreeVisualizer);
 
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
@@ -36,7 +35,7 @@ public class GraphicBinaryTreeWindow extends JFrame {
 
         add(infoPanel);
         add(userInputPanel);
-        add(graphicBinaryTreeVisualizer);
+        add(graphicAVLTreeVisualizer);
 
         pack();
         setVisible(true);
@@ -100,24 +99,27 @@ class UserInputPanel extends JPanel implements ActionListener {
     }
 }
 
-class GraphicBinaryTreeVisualizer extends JPanel {
+class GraphicAVLTreeVisualizer extends JPanel {
 
     final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     final int width = Math.min(1024, screenSize.width), height = Math.min(600, screenSize.height);
     int xCenter;
-    final int canvasPadding = 1, nodeWidth = 1, nodeHeight = 1, horizontalGap = 1, levelGap = 1, textSize = 0;
+    final int canvasPadding = 11, nodeWidth = 35, nodeHeight = 22, horizontalGap = 15, levelGap = 11, textSize = 16;
     final Point nodePadding = new Point(2, (nodeHeight - textSize) / 2);
     final int halfNodeWidth = nodeWidth / 2, halfNodeHeight = nodeHeight / 2;
 
-    TreeNode tree;
+    //TreeNode tree;
 
-    public GraphicBinaryTreeVisualizer() {
+    AVLTree avl;
+
+    public GraphicAVLTreeVisualizer() {
         setPreferredSize(new Dimension(width, height));
     }
 
-    public void update(TreeNode tree) {
-        this.tree = tree;
+    public void update(AVLTree avl) {
+        //this.tree = tree;
+        this.avl = avl;
         repaint();
     }
 
@@ -125,7 +127,7 @@ class GraphicBinaryTreeVisualizer extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        if (tree == null) return;
+        if (avl == null || avl.root == null) return;
 
         xCenter = getWidth() / 2;
 
@@ -146,10 +148,10 @@ class GraphicBinaryTreeVisualizer extends JPanel {
 
         g2d.translate(0, canvasPadding);
 
-        int[] subtreeWidthBalance = tree.graphicBreadth(tree.height());
+        int[] subtreeWidthBalance = avl.root.graphicBreadth(avl.height(avl.root));
         g2d.translate((coordsToPix(new Point(subtreeWidthBalance[0] - subtreeWidthBalance[1], 0)).x - xCenter + halfNodeWidth) / 2, 0);
 
-        drawTree(tree, new Point(0, 1), g2d);
+        drawTree(avl.root, new Point(0, 1), g2d);
 
         g2d.setTransform(originalTransform);
     }
@@ -158,28 +160,35 @@ class GraphicBinaryTreeVisualizer extends JPanel {
         return new Point((int)(xCenter + (p.x - 1.0) * halfNodeWidth + p.x * horizontalGap), p.y * (nodeHeight + levelGap));
     }
 
-    private void drawTree(TreeNode node, Point loc, Graphics2D g2d) {
+    private void drawTree(Node node, Point loc, Graphics2D g2d) {
         AffineTransform originalTransform = g2d.getTransform();
 
         Point pixelLoc = coordsToPix(loc);
 
-        g2d.drawString(GraphicBinaryTreeRunner.fmt(node.val()), pixelLoc.x + nodePadding.x, pixelLoc.y - nodePadding.y);
+        g2d.drawString(GraphicAVLTreeRunner.fmt(node.key), pixelLoc.x + nodePadding.x, pixelLoc.y - nodePadding.y);
 
         g2d.drawRect(pixelLoc.x, pixelLoc.y - nodeHeight, nodeWidth, nodeHeight);
 
+        Font defaultFont = g2d.getFont();
+        g2d.setFont(new Font("Arial", Font.ITALIC, textSize * 4 / 5));
+        g2d.setColor(Color.BLUE);
+        g2d.drawString(GraphicAVLTreeRunner.fmt(avl.getBalance(node)), pixelLoc.x + nodePadding.x + nodeWidth, pixelLoc.y - nodePadding.y);
+        g2d.setFont(defaultFont);
+        g2d.setColor(Color.BLACK);
+
         g2d.translate(halfNodeWidth, 0);
 
-        TreeNode lChild = node.left(), rChild = node.right();
-        TreeNode[] children = {lChild, rChild};
+        Node lChild = node.left, rChild = node.right;
+        Node[] children = {lChild, rChild};
 
         for (int i = children.length - 1; i >= 0; --i) {
-            TreeNode n = children[i];
+            Node n = children[i];
             if (n != null) {
                 int otherDirection = (i + 1) % 2;
-                TreeNode otherSide = children[otherDirection];
+                Node otherSide = children[otherDirection];
                 //int shift = 1 + (false ? 0 : n.visualWidthInDirection(otherDirection, 0, 0, n.height()) * 2 /*+ otherSide.visualWidthInDirection(i, 0, 0, n.height())*/);
 
-                int[] shift = n.graphicBreadth(Math.min(n.height(), otherSide == null ? 0 : otherSide.height()));
+                int[] shift = n.graphicBreadth(Math.min(avl.height(n), otherSide == null ? 0 : avl.height(otherSide)));
 
                 Point shiftedLoc = new Point(loc.x + (i == 0 ? -shift[1] - 1 : shift[0] + 1), loc.y + 1);
 

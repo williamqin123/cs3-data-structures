@@ -1,7 +1,7 @@
-public class GraphicBinaryTreeRunner {
+public class GraphicAVLTreeRunner {
 
     public static void main(String[] args) {
-        new GraphicBinaryTreeWindow();
+        new GraphicAVLTreeWindow();
     }
 
     public static String fmt(double d)
