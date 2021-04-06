@@ -3,7 +3,9 @@ import static java.lang.System.*;
 import java.io.*;
 
 @SuppressWarnings("unchecked")
+
 public class BinarySearchTreeDriver {
+
     public static void main(String args[])throws IOException
     {
         Scanner input = new Scanner(new File("BinarySearchTree.txt"));
